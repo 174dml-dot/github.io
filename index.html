@@ -499,53 +499,126 @@
         .match-detail-modal .detail-score .score-big.empty {
             color: rgba(255, 255, 255, 0.1);
         }
-        .match-detail-modal .detail-scorers {
+
+        /* Вкладки в детальном окне - текстовые переключатели по центру */
+        .detail-tabs {
             display: flex;
-            justify-content: space-between;
-            padding: 6px 0 12px 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-            margin-bottom: 10px;
-            gap: 10px;
+            justify-content: center;
+            gap: 24px;
+            margin: 14px 0 16px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 10px;
         }
-        .match-detail-modal .detail-scorers .scorers-col {
-            flex: 1;
-            text-align: left;
-        }
-        .match-detail-modal .detail-scorers .scorers-col.right {
-            text-align: right;
-        }
-        .match-detail-modal .detail-scorers .scorers-col .goal {
-            display: block;
-            font-size: 0.78rem;
-            padding: 1px 0;
-        }
-        .match-detail-modal .detail-scorers .scorers-col .goal .minute {
-            color: rgba(255, 255, 255, 0.4);
+        .detail-tabs .detail-tab-btn {
+            border: none;
+            background: none;
+            color: rgba(255, 255, 255, 0.25);
+            font-size: 0.85rem;
             font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            padding: 2px 0;
+            letter-spacing: 0.3px;
+            position: relative;
         }
-        .match-detail-modal .detail-scorers .scorers-col.home-col .goal {
+        .detail-tabs .detail-tab-btn:hover {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        .detail-tabs .detail-tab-btn.active {
+            color: #ffffff;
+        }
+        .detail-tabs .detail-tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -11px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #ffeb3b;
+            border-radius: 2px;
+        }
+        .detail-tab-content {
+            display: none;
+        }
+        .detail-tab-content.active {
+            display: block;
+        }
+
+        /* Ход матча с таймами */
+        .detail-scorers {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding: 4px 0 8px 0;
+        }
+        .detail-scorers .half-title {
+            text-align: left;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.25);
+            letter-spacing: 0.5px;
+            padding: 6px 0 2px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            margin-top: 4px;
+        }
+        .detail-scorers .half-title:first-of-type {
+            border-top: none;
+            margin-top: 0;
+            padding-top: 0;
+        }
+        .detail-scorers .goal-line {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+            padding: 3px 4px;
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .detail-scorers .goal-line.home-goal {
             color: #ffeb3b;
+            justify-content: flex-start;
+            gap: 6px;
         }
-        .match-detail-modal .detail-scorers .scorers-col.away-col .goal {
+        .detail-scorers .goal-line.away-goal {
             color: #ff1744;
+            justify-content: flex-end;
+            gap: 6px;
         }
-        .match-detail-modal .detail-scorers .scorers-empty {
-            color: rgba(255, 255, 255, 0.1);
+        .detail-scorers .goal-line .minute {
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 600;
             font-size: 0.8rem;
         }
-        .match-detail-modal .detail-scorers .scorers-divider {
-            width: 1px;
-            background: rgba(255, 255, 255, 0.04);
-            flex-shrink: 0;
+        .detail-scorers .goal-line .player-name {
+            font-weight: 500;
         }
-        .match-detail-modal .stat-row {
+        .detail-scorers .goal-line .assist {
+            color: rgba(255, 255, 255, 0.35);
+            font-size: 0.75rem;
+            font-weight: 400;
+        }
+        .detail-scorers .scorers-empty {
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 0.85rem;
+            text-align: center;
+            padding: 4px 0;
+        }
+
+        /* Статистика */
+        .detail-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 4px 0;
+        }
+        .detail-stats .stat-row {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 7px 0;
+            padding: 6px 0;
             border-bottom: 1px solid rgba(255, 255, 255, 0.03);
         }
-        .match-detail-modal .stat-row .stat-label {
+        .detail-stats .stat-row .stat-label {
             font-size: 0.75rem;
             color: rgba(255, 255, 255, 0.4);
             font-weight: 500;
@@ -556,7 +629,7 @@
             justify-content: center;
             gap: 6px;
         }
-        .match-detail-modal .stat-row .stat-label .info-icon {
+        .detail-stats .stat-row .stat-label .info-icon {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -573,12 +646,12 @@
             position: relative;
             font-style: normal;
         }
-        .match-detail-modal .stat-row .stat-label .info-icon:hover {
+        .detail-stats .stat-row .stat-label .info-icon:hover {
             background: rgba(255, 255, 255, 0.1);
             color: #fff;
             border-color: rgba(255, 255, 255, 0.2);
         }
-        .match-detail-modal .stat-row .stat-label .info-icon .tooltip {
+        .detail-stats .stat-row .stat-label .info-icon .tooltip {
             display: none;
             position: fixed;
             top: 50%;
@@ -600,32 +673,32 @@
             line-height: 1.5;
             white-space: normal;
         }
-        .match-detail-modal .stat-row .stat-label .info-icon .tooltip::after {
+        .detail-stats .stat-row .stat-label .info-icon .tooltip::after {
             display: none;
         }
-        .match-detail-modal .stat-row .stat-label .info-icon:hover .tooltip {
+        .detail-stats .stat-row .stat-label .info-icon:hover .tooltip {
             display: block;
         }
-        .match-detail-modal .stat-row .stat-bar-wrap {
+        .detail-stats .stat-row .stat-bar-wrap {
             width: 100%;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        .match-detail-modal .stat-row .stat-bar-wrap .stat-values {
+        .detail-stats .stat-row .stat-bar-wrap .stat-values {
             font-weight: 600;
             font-size: 0.85rem;
             flex-shrink: 0;
             min-width: 45px;
             text-align: center;
         }
-        .match-detail-modal .stat-row .stat-bar-wrap .stat-values .home-val {
+        .detail-stats .stat-row .stat-bar-wrap .stat-values .home-val {
             color: #ffeb3b;
         }
-        .match-detail-modal .stat-row .stat-bar-wrap .stat-values .away-val {
+        .detail-stats .stat-row .stat-bar-wrap .stat-values .away-val {
             color: #ff1744;
         }
-        .match-detail-modal .stat-row .stat-bar {
+        .detail-stats .stat-row .stat-bar {
             height: 7px;
             border-radius: 10px;
             background: rgba(255, 255, 255, 0.06);
@@ -633,22 +706,23 @@
             flex: 1;
             display: flex;
         }
-        .match-detail-modal .stat-row .stat-bar .bar-home {
+        .detail-stats .stat-row .stat-bar .bar-home {
             background: linear-gradient(90deg, #2e7d32, #66bb6a);
             height: 100%;
             transition: width 0.5s;
         }
-        .match-detail-modal .stat-row .stat-bar .bar-away {
+        .detail-stats .stat-row .stat-bar .bar-away {
             background: linear-gradient(90deg, #ff1744, #d50000);
             height: 100%;
             transition: width 0.5s;
         }
-        .match-detail-modal .not-played {
+        .detail-stats .not-played {
             text-align: center;
-            padding: 30px 0;
+            padding: 20px 0;
             color: rgba(255, 255, 255, 0.2);
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
+
         .stats-wrap {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(12px);
@@ -798,9 +872,9 @@
             border-radius: 16px;
             padding: 14px 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            min-width: 280px;
-            flex: 1 1 280px;
-            max-width: 350px;
+            min-width: 200px;
+            flex: 1 1 200px;
+            max-width: 280px;
             transition: 0.3s;
             cursor: pointer;
         }
@@ -813,7 +887,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         .playoff-match-card .match-teams .team {
             display: flex;
@@ -827,19 +901,12 @@
             line-height: 1.2;
         }
         .playoff-match-card .match-teams .team .team-name {
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-align: center;
-            word-wrap: break-word;
-            word-break: break-word;
-            line-height: 1.2;
-            max-width: 100%;
-            margin-top: 4px;
+            display: none;
         }
         .playoff-match-card .match-teams .score-center {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             font-weight: 800;
-            min-width: 70px;
+            min-width: 60px;
             flex-shrink: 0;
             text-align: center;
             color: #ffeb3b;
@@ -929,8 +996,9 @@
                 grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             }
             .playoff-match-card {
-                min-width: 200px;
-                flex: 1 1 200px;
+                min-width: 160px;
+                flex: 1 1 160px;
+                padding: 12px 14px;
             }
             .playoff-round-title {
                 font-size: 1.3rem;
@@ -942,17 +1010,16 @@
                 font-size: 1.2rem;
                 min-width: 50px;
             }
-            .playoff-match-card .match-teams .team .team-name {
-                font-size: 0.75rem;
-            }
             .playoff-round-filters .round-filter-btn {
                 padding: 5px 14px;
                 font-size: 0.7rem;
             }
-            .match-detail-modal .stat-row .stat-label .info-icon .tooltip {
-                max-width: 260px;
+            .detail-tabs .detail-tab-btn {
+                font-size: 0.75rem;
+                gap: 16px;
+            }
+            .detail-scorers .goal-line {
                 font-size: 0.8rem;
-                padding: 14px 20px;
             }
         }
         @media (max-width: 480px) {
@@ -973,9 +1040,6 @@
                 font-size: 1.6rem;
                 min-width: 50px;
             }
-            .match-detail-modal .detail-scorers .scorers-col .goal {
-                font-size: 0.7rem;
-            }
             .team-match-item {
                 font-size: 0.65rem;
                 gap: 4px;
@@ -991,9 +1055,9 @@
                 grid-template-columns: 1fr 1fr;
             }
             .playoff-match-card {
-                min-width: 160px;
-                flex: 1 1 160px;
-                padding: 10px 12px;
+                min-width: 140px;
+                flex: 1 1 140px;
+                padding: 10px 10px;
             }
             .playoff-round-title {
                 font-size: 1.1rem;
@@ -1005,17 +1069,16 @@
                 font-size: 1rem;
                 min-width: 40px;
             }
-            .playoff-match-card .match-teams .team .team-name {
-                font-size: 0.65rem;
-            }
             .tab-btn {
                 padding: 5px 10px;
                 font-size: 0.7rem;
             }
-            .match-detail-modal .stat-row .stat-label .info-icon .tooltip {
-                max-width: 220px;
+            .detail-tabs .detail-tab-btn {
                 font-size: 0.7rem;
-                padding: 12px 16px;
+                gap: 12px;
+            }
+            .detail-scorers .goal-line {
+                font-size: 0.7rem;
             }
         }
     </style>
@@ -1132,49 +1195,50 @@
             'Панама': '🇵🇦'
         };
 
+        // Все ассистенты установлены в null
         const MATCHES_DATA = {
             'A': [
                 { home: 'Мексика', away: 'ЮАР', homeScore: 2, awayScore: 0, date: '2026-06-12', time: '00:00',
                     yellowHome: 1, yellowAway: 2, redHome: 1, redAway: 2, shotsTotalHome: 16, shotsTotalAway: 3,
                     bigChancesHome: 2, bigChancesAway: 0, shotsOnHome: 4, shotsOnAway: 2,
                     possessionHome: 61, possessionAway: 39, cornersHome: 3, cornersAway: 1,
-                    scorers: [{ player: 'Киньонес', minute: 9, team: 'home' }, { player: 'Хименес', minute: 67,
-                        team: 'home' }] },
+                    scorers: [{ player: 'Киньонес', minute: 9, team: 'home', assist: null }, { player: 'Хименес', minute: 67,
+                        team: 'home', assist: null }] },
                 { home: 'Южная Корея', away: 'Чехия', homeScore: 2, awayScore: 1, date: '2026-06-12', time: '07:00',
                     yellowHome: 1, yellowAway: 0, redHome: 0, redAway: 0, shotsTotalHome: 15, shotsTotalAway: 7,
                     bigChancesHome: 4, bigChancesAway: 1, shotsOnHome: 6, shotsOnAway: 4,
                     possessionHome: 61, possessionAway: 39, cornersHome: 4, cornersAway: 5,
-                    scorers: [{ player: 'Хван Ин-Бом', minute: 67, team: 'home' },
-                    { player: 'Ох Хьен-Ги', minute: 80, team: 'home' }, { player: 'Крейчер', minute: 59,
-                        team: 'away' }] },
+                    scorers: [{ player: 'Хван Ин-Бом', minute: 67, team: 'home', assist: null },
+                    { player: 'Ох Хьен-Ги', minute: 80, team: 'home', assist: null }, { player: 'Крейчер', minute: 59,
+                        team: 'away', assist: null }] },
                 { home: 'Чехия', away: 'ЮАР', homeScore: 1, awayScore: 1, date: '2026-06-18', time: '21:00',
                     yellowHome: 1, yellowAway: 2, redHome: 0, redAway: 0, shotsTotalHome: 14, shotsTotalAway: 17,
                     bigChancesHome: 3, bigChancesAway: 1, shotsOnHome: 3, shotsOnAway: 4,
                     possessionHome: 38, possessionAway: 62, cornersHome: 5, cornersAway: 5,
-                    scorers: [{ player: 'Садилек', minute: 6, team: 'home' },
-                    { player: '(Пен) Мокоена', minute: 83, team: 'away' }] },
+                    scorers: [{ player: 'Садилек', minute: 6, team: 'home', assist: null },
+                    { player: '(Пен) Мокоена', minute: 83, team: 'away', assist: null }] },
                 { home: 'Мексика', away: 'Южная Корея', homeScore: 1, awayScore: 0, date: '2026-06-19',
                     time: '06:00', yellowHome: 0, yellowAway: 2, redHome: 0, redAway: 0, shotsTotalHome: 8,
                     shotsTotalAway: 9, bigChancesHome: 2, bigChancesAway: 3, shotsOnHome: 4,
                     shotsOnAway: 2, possessionHome: 42, possessionAway: 58, cornersHome: 0,
-                    cornersAway: 2, scorers: [{ player: 'Ромо', minute: 50, team: 'home' }] },
+                    cornersAway: 2, scorers: [{ player: 'Ромо', minute: 50, team: 'home', assist: null }] },
                 { home: 'Чехия', away: 'Мексика', homeScore: 0, awayScore: 3, date: '2026-06-25',
                     time: '06:00', yellowHome: 0, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 13,
                     shotsTotalAway: 11, bigChancesHome: 0, bigChancesAway: 5, shotsOnHome: 1,
                     shotsOnAway: 5, possessionHome: 52, possessionAway: 48, cornersHome: 5,
                     cornersAway: 1, scorers: [{ player: 'Чавез Гарсия', minute: '55',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Киньонес', minute: '61',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Фигальдо', minute: '90+4',
-                        team: 'away' }
+                        team: 'away', assist: null }
                     ] },
                 { home: 'ЮАР', away: 'Южная Корея', homeScore: 1, awayScore: 0, date: '2026-06-25',
                     time: '06:00', yellowHome: 1, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 13,
                     shotsTotalAway: 8, bigChancesHome: 1, bigChancesAway: 1, shotsOnHome: 4,
                     shotsOnAway: 3, possessionHome: 32, possessionAway: 68, cornersHome: 4,
                     cornersAway: 6, scorers: [{ player: 'Масеко', minute: '63',
-                        team: 'home' }]
+                        team: 'home', assist: null }]
                 }
             ],
             'B': [
@@ -1182,70 +1246,70 @@
                     time: '00:00', yellowHome: 2, yellowAway: 3, redHome: 0, redAway: 0, shotsTotalHome: 13,
                     shotsTotalAway: 8, bigChancesHome: 2, bigChancesAway: 2, shotsOnHome: 4,
                     shotsOnAway: 3, possessionHome: 61, possessionAway: 39, cornersHome: 9, cornersAway: 4,
-                    scorers: [{ player: 'Ларин', minute: 78, team: 'home' }, { player: 'Лукич', minute: 21,
-                        team: 'away' }] },
+                    scorers: [{ player: 'Ларин', minute: 78, team: 'home', assist: null }, { player: 'Лукич', minute: 21,
+                        team: 'away', assist: null }] },
                 { home: 'Катар', away: 'Швейцария', homeScore: 1, awayScore: 1, date: '2026-06-14', time: '00:00',
                     yellowHome: 2, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 6, shotsTotalAway: 26,
                     bigChancesHome: 1, bigChancesAway: 6, shotsOnHome: 3, shotsOnAway: 7,
                     possessionHome: 32, possessionAway: 68, cornersHome: 3, cornersAway: 10,
-                    scorers: [{ player: 'Мухейм (АГ)', minute: 90, team: 'home' }, { player: '(Пен)Эмболо', minute: 17,
-                        team: 'away' }] },
+                    scorers: [{ player: 'Мухейм (АГ)', minute: 90, team: 'home', assist: null }, { player: '(Пен)Эмболо', minute: 17,
+                        team: 'away', assist: null }] },
                 { home: 'Швейцария', away: 'Босния и Герцеговина', homeScore: 4, awayScore: 1,
                     date: '2026-06-19', time: '00:00', yellowHome: 1, yellowAway: 2, redHome: 0, redAway: 1,
                     shotsTotalHome: 13, shotsTotalAway: 5, bigChancesHome: 4, bigChancesAway: 0, shotsOnHome: 7,
                     shotsOnAway: 3, possessionHome: 62, possessionAway: 38, cornersHome: 7,
                     cornersAway: 3, scorers: [
                         { player: 'Манзамби', minute: 74,
-                            team: 'home' },
+                            team: 'home', assist: null },
                         { player: 'Варгас', minute: 84,
-                            team: 'home' },
+                            team: 'home', assist: null },
                         { player: 'Манзамби', minute: 90,
-                            team: 'home' },
+                            team: 'home', assist: null },
                         { player: 'Джака(Пен)', minute: '90+7',
-                            team: 'home' },
+                            team: 'home', assist: null },
                         { player: 'Махмич', minute: '90+3',
-                            team: 'away' }
+                            team: 'away', assist: null }
                     ] },
                 { home: 'Канада', away: 'Катар', homeScore: 6, awayScore: 0, date: '2026-06-19',
                     time: '03:00', yellowHome: 1, yellowAway: 1, redHome: 0, redAway: 2, shotsTotalHome: 32,
                     shotsTotalAway: 2, bigChancesHome: 6, bigChancesAway: 0, shotsOnHome: 10,
                     shotsOnAway: 0, possessionHome: 79, possessionAway: 21, cornersHome: 19,
                     cornersAway: 1, scorers: [{ player: 'Ларин', minute: 16,
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Дэвид', minute: 29,
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Дэвид', minute: '45+3',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Салиба', minute: 64,
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Ал Маней (АГ)', minute: 76,
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Дэвид', minute: '90+2',
-                        team: 'home' }
+                        team: 'home', assist: null }
                     ] },
                 { home: 'Швейцария', away: 'Канада', homeScore: 2, awayScore: 1, date: '2026-06-25',
                     time: '00:00', yellowHome: 1, yellowAway: 2, redHome: 0, redAway: 0, shotsTotalHome: 6,
                     shotsTotalAway: 13, bigChancesHome: 3, bigChancesAway: 3, shotsOnHome: 4,
                     shotsOnAway: 7, possessionHome: 55, possessionAway: 45, cornersHome: 2,
                     cornersAway: 7, scorers: [{ player: 'Варгас', minute: '46',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Манзамби', minute: '57',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Дэвид', minute: '76',
-                        team: 'away' }
+                        team: 'away', assist: null }
                     ] },
                 { home: 'Босния и Герцеговина', away: 'Катар', homeScore: 3, awayScore: 1, date: '2026-06-25',
                     time: '00:00', yellowHome: 1, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 14,
                     shotsTotalAway: 9, bigChancesHome: 1, bigChancesAway: 3, shotsOnHome: 5,
                     shotsOnAway: 3, possessionHome: 54, possessionAway: 46, cornersHome: 5,
                     cornersAway: 5, scorers: [{ player: 'Аладжбегович', minute: '29',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Абунада (АГ)', minute: '34',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Аль-Хайдос', minute: '42',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Махмич', minute: '80',
-                        team: 'home' }
+                        team: 'home', assist: null }
                     ] }
             ],
             'C': [
@@ -1254,60 +1318,60 @@
                     shotsTotalAway: 14, bigChancesHome: 1, bigChancesAway: 2, shotsOnHome: 5,
                     shotsOnAway: 3, possessionHome: 51, possessionAway: 49, cornersHome: 6,
                     cornersAway: 2, scorers: [{ player: 'Винисиус', minute: '32',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Сайбари', minute: '21',
-                        team: 'away' }
+                        team: 'away', assist: null }
                     ] },
                 { home: 'Гаити', away: 'Шотландия', homeScore: 0, awayScore: 1, date: '2026-06-14',
                     time: '06:00', yellowHome: 1, yellowAway: 3, redHome: 0, redAway: 0, shotsTotalHome: 15,
                     shotsTotalAway: 9, bigChancesHome: 1, bigChancesAway: 2, shotsOnHome: 2,
                     shotsOnAway: 2, possessionHome: 54, possessionAway: 46, cornersHome: 4,
                     cornersAway: 3, scorers: [{ player: 'МакГир', minute: '28',
-                        team: 'away' }] },
+                        team: 'away', assist: null }] },
                 { home: 'Шотландия', away: 'Марокко', homeScore: 0, awayScore: 1, date: '2026-06-20',
                     time: '03:00', yellowHome: 1, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 6,
                     shotsTotalAway: 12, bigChancesHome: 1, bigChancesAway: 3, shotsOnHome: 0,
                     shotsOnAway: 2, possessionHome: 41, possessionAway: 59, cornersHome: 2,
                     cornersAway: 5, scorers: [{ player: 'Сайбари', minute: '2',
-                        team: 'away' }] },
+                        team: 'away', assist: null }] },
                 { home: 'Бразилия', away: 'Гаити', homeScore: 3, awayScore: 0, date: '2026-06-20',
                     time: '05:30', yellowHome: 1, yellowAway: 3, redHome: 0, redAway: 0, shotsTotalHome: 8,
                     shotsTotalAway: 7, bigChancesHome: 5, bigChancesAway: 0, shotsOnHome: 6,
                     shotsOnAway: 3, possessionHome: 57, possessionAway: 43, cornersHome: 4,
                     cornersAway: 4, scorers: [{ player: 'Кунья', minute: '23',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Кунья', minute: '36',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Винисиус', minute: '45+3',
-                        team: 'home' }
+                        team: 'home', assist: null }
                     ] },
                 { home: 'Шотландия', away: 'Бразилия', homeScore: 0, awayScore: 3, date: '2026-06-25',
                     time: '03:00', yellowHome: 1, yellowAway: 2, redHome: 0, redAway: 0, shotsTotalHome: 14,
                     shotsTotalAway: 21, bigChancesHome: 1, bigChancesAway: 6, shotsOnHome: 5,
                     shotsOnAway: 9, possessionHome: 46, possessionAway: 54, cornersHome: 7,
                     cornersAway: 6, scorers: [{ player: 'Винисиус', minute: '7',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Винисиус', minute: '45+3',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Кунья', minute: '60',
-                        team: 'away' }
+                        team: 'away', assist: null }
                     ] },
                 { home: 'Марокко', away: 'Гаити', homeScore: 4, awayScore: 2, date: '2026-06-25',
                     time: '03:00', yellowHome: 0, yellowAway: 3, redHome: 0, redAway: 0, shotsTotalHome: 22,
                     shotsTotalAway: 9, bigChancesHome: 5, bigChancesAway: 1, shotsOnHome: 11,
                     shotsOnAway: 2, possessionHome: 69, possessionAway: 31, cornersHome: 9,
                     cornersAway: 1, scorers: [{ player: 'Боно (АГ)', minute: '10',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Хакими', minute: '39',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Исидор', minute: '43',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Сайбари', minute: '45+1',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Рахими', minute: '78',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Ясин', minute: '89',
-                        team: 'home' }
+                        team: 'home', assist: null }
                     ] }
             ],
             'D': [
@@ -1316,54 +1380,55 @@
                     bigChancesHome: 4, bigChancesAway: 1, shotsOnHome: 6, shotsOnAway: 1,
                     possessionHome: 65, possessionAway: 35, cornersHome: 3, cornersAway: 1,
                     scorers: [{ player: 'Бобадилла', minute: '7',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Балоган', minute: '31',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Балоган', minute: '45+5',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Рейна', minute: '90+8',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Маурисио', minute: '73',
-                        team: 'away' }
+                        team: 'away', assist: null }
                     ] },
                 { home: 'Австралия', away: 'Турция', homeScore: 2, awayScore: 0, date: '2026-06-14',
                     time: '09:00', yellowHome: 0, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 9,
                     shotsTotalAway: 30, bigChancesHome: 1, bigChancesAway: 2, shotsOnHome: 4,
                     shotsOnAway: 8, possessionHome: 28, possessionAway: 72, cornersHome: 5,
                     cornersAway: 8, scorers: [{ player: 'Ирэнкандэ', minute: '27',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Меткалф', minute: '75',
-                        team: 'home' }
+                        team: 'home', assist: null }
                     ] },
                 { home: 'Турция', away: 'Парагвай', homeScore: 0, awayScore: 1, date: '2026-06-20',
                     time: '08:00', yellowHome: 1, yellowAway: 1, redHome: 0, redAway: 1, shotsTotalHome: 32,
                     shotsTotalAway: 7, bigChancesHome: 5, bigChancesAway: 0, shotsOnHome: 6,
                     shotsOnAway: 2, possessionHome: 79, possessionAway: 21, cornersHome: 12,
                     cornersAway: 0, scorers: [{ player: 'Галарза', minute: '2',
-                        team: 'away' }] },
+                        team: 'away', assist: null }] },
                 { home: 'США', away: 'Австралия', homeScore: 2, awayScore: 0, date: '2026-06-20',
                     time: '00:00', yellowHome: 3, yellowAway: 4, redHome: 0, redAway: 0, shotsTotalHome: 10,
                     shotsTotalAway: 5, bigChancesHome: 2, bigChancesAway: 0, shotsOnHome: 2,
                     shotsOnAway: 2, possessionHome: 62, possessionAway: 38, cornersHome: 7,
                     cornersAway: 4, scorers: [{ player: 'Бургес (АГ)', minute: '11',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Фримэн', minute: '43',
-                        team: 'home' }
+                        team: 'home', assist: null }
                     ] },
                 { home: 'Турция', away: 'США', homeScore: 3, awayScore: 2, date: '2026-06-26', time: '07:00',
                     yellowHome: 0, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 9, shotsTotalAway: 18,
                     bigChancesHome: 4, bigChancesAway: 4, shotsOnHome: 3, shotsOnAway: 7,
                     possessionHome: 48, possessionAway: 52, cornersHome: 2, cornersAway: 9,
                     scorers: [{ player: 'Гюлер', minute: '10',
-team: 'home' },
-{ player: 'Йылмаз', minute: '31',
-team: 'home' },
-{ player: 'Айхан', minute: '90+8',
-team: 'home' },
-{ player: 'Трасти', minute: '3',
-team: 'away' },
-{ player: 'Берхалтер', minute: '49',
-team: 'away' }] },
+                            team: 'home', assist: null },
+                        { player: 'Йылмаз', minute: '31',
+                            team: 'home', assist: null },
+                        { player: 'Айхан', minute: '90+8',
+                            team: 'home', assist: null },
+                        { player: 'Трасти', minute: '3',
+                            team: 'away', assist: null },
+                        { player: 'Берхалтер', minute: '49',
+                            team: 'away', assist: null }
+                    ] },
                 { home: 'Парагвай', away: 'Австралия', homeScore: 0, awayScore: 0, date: '2026-06-26',
                     time: '07:00', yellowHome: 1, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 7,
                     shotsTotalAway: 12, bigChancesHome: 0, bigChancesAway: 0, shotsOnHome: 2,
@@ -1376,28 +1441,28 @@ team: 'away' }] },
                     shotsTotalAway: 8, bigChancesHome: 6, bigChancesAway: 0, shotsOnHome: 12,
                     shotsOnAway: 2, possessionHome: 65, possessionAway: 35, cornersHome: 8,
                     cornersAway: 1, scorers: [{ player: 'Нмеча', minute: '6',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Шлоттербек', minute: '38',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Хаверц (Пен)', minute: '45+5',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Мусиала', minute: '47',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Браун', minute: '68',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Ундав', minute: '78',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Хаверц', minute: '88',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Комененция', minute: '21',
-                        team: 'away' }
+                        team: 'away', assist: null }
                     ] },
                 { home: 'Кот-д’Ивуар', away: 'Эквадор', homeScore: 1, awayScore: 0, date: '2026-06-15',
                     time: '04:00', yellowHome: 3, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 15,
                     shotsTotalAway: 12, bigChancesHome: 2, bigChancesAway: 1, shotsOnHome: 4,
                     shotsOnAway: 1, possessionHome: 48, possessionAway: 52, cornersHome: 3,
                     cornersAway: 5, scorers: [{ player: 'Диалло', minute: '90',
-                        team: 'home' }] },
+                        team: 'home', assist: null }] },
                 { home: 'Эквадор', away: 'Кюрасао', homeScore: 0, awayScore: 0, date: '2026-06-21',
                     time: '05:00', yellowHome: 1, yellowAway: 5, redHome: 0, redAway: 0, shotsTotalHome: 27,
                     shotsTotalAway: 10, bigChancesHome: 6, bigChancesAway: 0, shotsOnHome: 15,
@@ -1409,30 +1474,32 @@ team: 'away' }] },
                     shotsOnAway: 2, possessionHome: 59, possessionAway: 41, cornersHome: 8,
                     cornersAway: 3, scorers: [
                         { player: 'Кесси', minute: '30',
-                            team: 'away' },
+                            team: 'away', assist: null },
                         { player: 'Ундав', minute: '68',
-                            team: 'home' },
+                            team: 'home', assist: null },
                         { player: 'Ундав', minute: '90+4',
-                            team: 'home' }
+                            team: 'home', assist: null }
                     ] },
                 { home: 'Эквадор', away: 'Германия', homeScore: 2, awayScore: 1, date: '2026-06-26',
                     time: '01:00', yellowHome: 3, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 7,
                     shotsTotalAway: 11, bigChancesHome: 2, bigChancesAway: 2, shotsOnHome: 3,
                     shotsOnAway: 3, possessionHome: 39, possessionAway: 61, cornersHome: 3,
                     cornersAway: 2, scorers: [{ player: 'Сане', minute: '2',
-team: 'away' },
-{ player: 'Ангуло', minute: '9',
-team: 'home' },
-{ player: 'Плата', minute: '77',
-team: 'home' }] },
+                            team: 'away', assist: null },
+                        { player: 'Ангуло', minute: '9',
+                            team: 'home', assist: null },
+                        { player: 'Плата', minute: '77',
+                            team: 'home', assist: null }
+                    ] },
                 { home: 'Кюрасао', away: 'Кот-д’Ивуар', homeScore: 0, awayScore: 2, date: '2026-06-26',
                     time: '01:00', yellowHome: 2, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 11,
                     shotsTotalAway: 7, bigChancesHome: 0, bigChancesAway: 3, shotsOnHome: 2,
                     shotsOnAway: 3, possessionHome: 37, possessionAway: 63, cornersHome: 4,
                     cornersAway: 6, scorers: [{ player: 'Пепе', minute: '7',
-team: 'away' },
-{ player: 'Пепе', minute: '64',
-team: 'away' }] }
+                            team: 'away', assist: null },
+                        { player: 'Пепе', minute: '64',
+                            team: 'away', assist: null }
+                    ] }
             ],
             'F': [
                 { home: 'Нидерланды', away: 'Япония', homeScore: 2, awayScore: 2, date: '2026-06-15',
@@ -1440,81 +1507,83 @@ team: 'away' }] }
                     shotsTotalAway: 10, bigChancesHome: 0, bigChancesAway: 0, shotsOnHome: 6,
                     shotsOnAway: 3, possessionHome: 60, possessionAway: 40, cornersHome: 5,
                     cornersAway: 4, scorers: [{ player: 'Ван Дейк', minute: '51',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Саммервилл', minute: '64',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Накамура', minute: '57',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Камада', minute: '89',
-                        team: 'away' }
+                        team: 'away', assist: null }
                     ] },
                 { home: 'Швеция', away: 'Тунис', homeScore: 5, awayScore: 1, date: '2026-06-15', time: '07:00',
                     yellowHome: 0, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 13, shotsTotalAway: 6,
                     bigChancesHome: 4, bigChancesAway: 0, shotsOnHome: 7, shotsOnAway: 2,
                     possessionHome: 49, possessionAway: 51, cornersHome: 4, cornersAway: 2,
                     scorers: [{ player: 'Аяри', minute: '7',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Исак', minute: '30',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Дьёкереш', minute: '59',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Сванберг', minute: '84',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Аяри', minute: '90+6',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Рекик', minute: '43',
-                        team: 'away' }
+                        team: 'away', assist: null }
                     ] },
                 { home: 'Тунис', away: 'Япония', homeScore: 0, awayScore: 4, date: '2026-06-21', time: '09:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0, shotsTotalHome: 2, shotsTotalAway: 11,
                     bigChancesHome: 0, bigChancesAway: 3, shotsOnHome: 0, shotsOnAway: 5,
                     possessionHome: 38, possessionAway: 62, cornersHome: 3, cornersAway: 5,
                     scorers: [{ player: 'Камада', minute: '4',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Уэда', minute: '31',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Дзюня', minute: '69',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Уэда', minute: '84',
-                        team: 'away' }
+                        team: 'away', assist: null }
                     ] },
                 { home: 'Нидерланды', away: 'Швеция', homeScore: 5, awayScore: 1, date: '2026-06-20',
                     time: '22:00', yellowHome: 0, yellowAway: 3, redHome: 0, redAway: 0, shotsTotalHome: 10,
                     shotsTotalAway: 16, bigChancesHome: 3, bigChancesAway: 2, shotsOnHome: 7,
                     shotsOnAway: 8, possessionHome: 51, possessionAway: 49, cornersHome: 2,
                     cornersAway: 5, scorers: [{ player: 'Бробби', minute: '5',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Бробби', minute: '17',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Гакпо', minute: '47',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Гакпо', minute: '54',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Саммервилл', minute: '89',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Эланга', minute: '59',
-                        team: 'away' }
+                        team: 'away', assist: null }
                     ] },
                 { home: 'Тунис', away: 'Нидерланды', homeScore: 1, awayScore: 3, date: '2026-06-26',
                     time: '04:00', yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0, shotsTotalHome: 10,
                     shotsTotalAway: 20, bigChancesHome: 2, bigChancesAway: 2, shotsOnHome: 4,
                     shotsOnAway: 7, possessionHome: 29, possessionAway: 71, cornersHome: 4,
                     cornersAway: 6, scorers: [{ player: 'Мастоури', minute: '54',
-team: 'away' },
-{ player: 'Шхири (АГ)', minute: '3',
-team: 'home' },
-{ player: 'Бробби', minute: '7',
-team: 'home' },
-{ player: 'Ван Хекке', minute: '62',
-team: 'home' }] },
+                            team: 'away', assist: null },
+                        { player: 'Шхири (АГ)', minute: '3',
+                            team: 'home', assist: null },
+                        { player: 'Бробби', minute: '7',
+                            team: 'home', assist: null },
+                        { player: 'Ван Хекке', minute: '62',
+                            team: 'home', assist: null }
+                    ] },
                 { home: 'Япония', away: 'Швеция', homeScore: 1, awayScore: 1, date: '2026-06-26',
                     time: '04:00', yellowHome: 1, yellowAway: 2, redHome: 0, redAway: 0, shotsTotalHome: 8,
                     shotsTotalAway: 11, bigChancesHome: 2, bigChancesAway: 1, shotsOnHome: 3,
                     shotsOnAway: 5, possessionHome: 52, possessionAway: 48, cornersHome: 2,
                     cornersAway: 8, scorers: [{ player: 'Маэда', minute: '56',
-team: 'home' },
-{ player: 'Эланга', minute: '62',
-team: 'away' }] }
+                            team: 'home', assist: null },
+                        { player: 'Эланга', minute: '62',
+                            team: 'away', assist: null }
+                    ] }
             ],
             'G': [
                 { home: 'Бельгия', away: 'Египет', homeScore: 1, awayScore: 1, date: '2026-06-16',
@@ -1522,35 +1591,35 @@ team: 'away' }] }
                     shotsTotalAway: 14, bigChancesHome: 2, bigChancesAway: 2, shotsOnHome: 3,
                     shotsOnAway: 3, possessionHome: 54, possessionAway: 46, cornersHome: 2,
                     cornersAway: 8, scorers: [{ player: 'Ашур', minute: '20',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Хени (АГ)', minute: '66',
-                        team: 'home' }
+                        team: 'home', assist: null }
                     ] },
                 { home: 'Иран', away: 'Новая Зеландия', homeScore: 2, awayScore: 2, date: '2026-06-16',
                     time: '06:00', yellowHome: 1, yellowAway: 0, redHome: 0, redAway: 0, shotsTotalHome: 17,
                     shotsTotalAway: 14, bigChancesHome: 2, bigChancesAway: 2, shotsOnHome: 4,
                     shotsOnAway: 8, possessionHome: 48, possessionAway: 52, cornersHome: 4,
                     cornersAway: 1, scorers: [{ player: 'Резаян', minute: '32',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Мохеби', minute: '64',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Джаст', minute: '7',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Джаст', minute: '54',
-                        team: 'away' }
+                        team: 'away', assist: null }
                     ] },
                 { home: 'Новая Зеландия', away: 'Египет', homeScore: 1, awayScore: 3, date: '2026-06-22',
                     time: '06:00', yellowHome: 2, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 11,
                     shotsTotalAway: 19, bigChancesHome: 3, bigChancesAway: 3, shotsOnHome: 5,
                     shotsOnAway: 7, possessionHome: 44, possessionAway: 56, cornersHome: 4,
                     cornersAway: 3, scorers: [{ player: 'Сурман', minute: '15',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Зико', minute: '58',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Салах', minute: '67',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Трезеге', minute: '82',
-                        team: 'away' }
+                        team: 'away', assist: null }
                     ] },
                 { home: 'Бельгия', away: 'Иран', homeScore: 0, awayScore: 0, date: '2026-06-22',
                     time: '00:00', yellowHome: 1, yellowAway: 1, redHome: 1, redAway: 0, shotsTotalHome: 23,
@@ -1562,25 +1631,27 @@ team: 'away' }] }
                     shotsTotalAway: 35, bigChancesHome: 0, bigChancesAway: 4, shotsOnHome: 2,
                     shotsOnAway: 10, possessionHome: 45, possessionAway: 55, cornersHome: 5,
                     cornersAway: 8, scorers: [{ player: 'Джаст', minute: '84',
-team: 'home' },
-{ player: 'Троссард', minute: '28',
-team: 'away' },
-{ player: 'Троссард', minute: '50',
-team: 'away' },
-{ player: 'Де Брюйне', minute: '66',
-team: 'away' },
-{ player: 'Лукаку', minute: '86',
-team: 'away' },
-{ player: 'Салемакерс', minute: '90+4',
-team: 'away' }] },
+                            team: 'home', assist: null },
+                        { player: 'Троссард', minute: '28',
+                            team: 'away', assist: null },
+                        { player: 'Троссард', minute: '50',
+                            team: 'away', assist: null },
+                        { player: 'Де Брюйне', minute: '66',
+                            team: 'away', assist: null },
+                        { player: 'Лукаку', minute: '86',
+                            team: 'away', assist: null },
+                        { player: 'Салемакерс', minute: '90+4',
+                            team: 'away', assist: null }
+                    ] },
                 { home: 'Египет', away: 'Иран', homeScore: 1, awayScore: 1, date: '2026-06-27',
                     time: '08:00', yellowHome: 3, yellowAway: 4, redHome: 0, redAway: 0, shotsTotalHome: 15,
                     shotsTotalAway: 13, bigChancesHome: 0, bigChancesAway: 4, shotsOnHome: 3,
                     shotsOnAway: 4, possessionHome: 61, possessionAway: 39, cornersHome: 8,
                     cornersAway: 2, scorers: [{ player: 'Сабир', minute: '5',
-team: 'home' },
-{ player: 'Резаян', minute: '14',
-team: 'away' }] }
+                            team: 'home', assist: null },
+                        { player: 'Резаян', minute: '14',
+                            team: 'away', assist: null }
+                    ] }
             ],
             'H': [
                 { home: 'Испания', away: 'Кабо-Верде', homeScore: 0, awayScore: 0, date: '2026-06-15',
@@ -1593,42 +1664,42 @@ team: 'away' }] }
                     shotsTotalAway: 27, bigChancesHome: 1, bigChancesAway: 2, shotsOnHome: 3,
                     shotsOnAway: 10, possessionHome: 33, possessionAway: 67, cornersHome: 4,
                     cornersAway: 14, scorers: [{ player: 'Аль-Амри', minute: '41',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Араухо', minute: '80',
-                        team: 'away' }
+                        team: 'away', assist: null }
                     ] },
                 { home: 'Уругвай', away: 'Кабо-Верде', homeScore: 2, awayScore: 2, date: '2026-06-22',
                     time: '03:00', yellowHome: 2, yellowAway: 2, redHome: 0, redAway: 0, shotsTotalHome: 17,
                     shotsTotalAway: 12, bigChancesHome: 2, bigChancesAway: 1, shotsOnHome: 2,
                     shotsOnAway: 4, possessionHome: 65, possessionAway: 35, cornersHome: 11,
                     cornersAway: 4, scorers: [{ player: 'Араухо', minute: '44',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Каноббио', minute: '45+6',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Ленини', minute: '21',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Варела', minute: '61',
-                        team: 'away' }
+                        team: 'away', assist: null }
                     ] },
                 { home: 'Испания', away: 'Саудовская Аравия', homeScore: 4, awayScore: 0, date: '2026-06-21',
                     time: '21:00', yellowHome: 0, yellowAway: 2, redHome: 0, redAway: 0, shotsTotalHome: 22,
                     shotsTotalAway: 3, bigChancesHome: 5, bigChancesAway: 0, shotsOnHome: 8,
                     shotsOnAway: 1, possessionHome: 67, possessionAway: 33, cornersHome: 6,
                     cornersAway: 1, scorers: [{ player: 'Ямаль', minute: '10',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Оярсабаль', minute: '21',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Оярсабаль', minute: '24',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Аль-Тамбакти (АГ)', minute: '49',
-                        team: 'home' }
+                        team: 'home', assist: null }
                     ] },
                 { home: 'Уругвай', away: 'Испания', homeScore: 0, awayScore: 1, date: '2026-06-27',
                     time: '05:00', yellowHome: 3, yellowAway: 1, redHome: 1, redAway: 0, shotsTotalHome: 5,
                     shotsTotalAway: 6, bigChancesHome: 1, bigChancesAway: 1, shotsOnHome: 1,
                     shotsOnAway: 1, possessionHome: 33, possessionAway: 67, cornersHome: 1,
                     cornersAway: 6, scorers: [{ player: 'Баена', minute: '42',
-team: 'away' }] },
+                            team: 'away', assist: null }] },
                 { home: 'Кабо-Верде', away: 'Саудовская Аравия', homeScore: 0, awayScore: 0, date: '2026-06-27',
                     time: '05:00', yellowHome: 1, yellowAway: 3, redHome: 0, redAway: 0, shotsTotalHome: 15,
                     shotsTotalAway: 7, bigChancesHome: 1, bigChancesAway: 1, shotsOnHome: 2,
@@ -1641,83 +1712,85 @@ team: 'away' }] },
                     shotsTotalAway: 6, bigChancesHome: 4, bigChancesAway: 2, shotsOnHome: 8,
                     shotsOnAway: 2, possessionHome: 53, possessionAway: 47, cornersHome: 6,
                     cornersAway: 4, scorers: [{ player: 'Мбаппе', minute: '66',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Барколя', minute: '82',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Мбаппе', minute: '90+6',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Мбайе', minute: '90+5',
-                        team: 'away' }
+                        team: 'away', assist: null }
                     ] },
                 { home: 'Ирак', away: 'Норвегия', homeScore: 1, awayScore: 4, date: '2026-06-17',
                     time: '03:00', yellowHome: 1, yellowAway: 0, redHome: 0, redAway: 0, shotsTotalHome: 11,
                     shotsTotalAway: 12, bigChancesHome: 1, bigChancesAway: 5, shotsOnHome: 1,
                     shotsOnAway: 5, possessionHome: 39, possessionAway: 61, cornersHome: 2,
                     cornersAway: 5, scorers: [{ player: 'Холанд', minute: '29',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Холанд', minute: '43',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Остигард', minute: '76',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Хуссейн (АГ)', minute: '90+6',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Хуссейн', minute: '39',
-                        team: 'home' }
+                        team: 'home', assist: null }
                     ] },
                 { home: 'Норвегия', away: 'Сенегал', homeScore: 3, awayScore: 2, date: '2026-06-23',
                     time: '05:00', yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0, shotsTotalHome: 13,
                     shotsTotalAway: 16, bigChancesHome: 5, bigChancesAway: 4, shotsOnHome: 7,
                     shotsOnAway: 4, possessionHome: 42, possessionAway: 58, cornersHome: 5,
                     cornersAway: 4, scorers: [{ player: 'Педерсен', minute: '43',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Холанд', minute: '48',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Холанд', minute: '58',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Сарр', minute: '53',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Сарр', minute: '90+3',
-                        team: 'away' }
+                        team: 'away', assist: null }
                     ] },
                 { home: 'Франция', away: 'Ирак', homeScore: 3, awayScore: 0, date: '2026-06-23',
                     time: '03:00', yellowHome: 0, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 19,
                     shotsTotalAway: 4, bigChancesHome: 5, bigChancesAway: 1, shotsOnHome: 5,
                     shotsOnAway: 0, possessionHome: 56, possessionAway: 44, cornersHome: 4,
                     cornersAway: 2, scorers: [{ player: 'Мбаппе', minute: '14',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Мбаппе', minute: '54',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Дембеле', minute: '66',
-                        team: 'home' }
+                        team: 'home', assist: null }
                     ] },
                 { home: 'Норвегия', away: 'Франция', homeScore: 1, awayScore: 4, date: '2026-06-27',
                     time: '00:00', yellowHome: 1, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 10,
                     shotsTotalAway: 18, bigChancesHome: 4, bigChancesAway: 3, shotsOnHome: 4,
                     shotsOnAway: 9, possessionHome: 43, possessionAway: 57, cornersHome: 4,
                     cornersAway: 5, scorers: [{ player: 'Осгард', minute: '21',
-team: 'home' },
-{ player: 'Дембеле', minute: '7',
-team: 'away' },
-{ player: 'Дембеле', minute: '20',
-team: 'away' },
-{ player: 'Дембеле', minute: '32',
-team: 'away' },
-{ player: 'Дуэ', minute: '90+4',
-team: 'away' }] },
+                            team: 'home', assist: null },
+                        { player: 'Дембеле', minute: '7',
+                            team: 'away', assist: null },
+                        { player: 'Дембеле', minute: '20',
+                            team: 'away', assist: null },
+                        { player: 'Дембеле', minute: '32',
+                            team: 'away', assist: null },
+                        { player: 'Дуэ', minute: '90+4',
+                            team: 'away', assist: null }
+                    ] },
                 { home: 'Сенегал', away: 'Ирак', homeScore: 5, awayScore: 0, date: '2026-06-27',
                     time: '00:00', yellowHome: 2, yellowAway: 2, redHome: 0, redAway: 1, shotsTotalHome: 28,
                     shotsTotalAway: 6, bigChancesHome: 5, bigChancesAway: 0, shotsOnHome: 12,
                     shotsOnAway: 1, possessionHome: 69, possessionAway: 31, cornersHome: 12,
                     cornersAway: 3, scorers: [{ player: 'Диарра', minute: '4',
-team: 'home' },
-{ player: 'Сарр', minute: '56',
-team: 'home' },
-{ player: 'Гуйе', minute: '59',
-team: 'home' },
-{ player: 'Гуйе', minute: '71',
-team: 'home' },
-{ player: 'Ндиайе', minute: '82',
-team: 'home' }] }
+                            team: 'home', assist: null },
+                        { player: 'Сарр', minute: '56',
+                            team: 'home', assist: null },
+                        { player: 'Гуйе', minute: '59',
+                            team: 'home', assist: null },
+                        { player: 'Гуйе', minute: '71',
+                            team: 'home', assist: null },
+                        { player: 'Ндиайе', minute: '82',
+                            team: 'home', assist: null }
+                    ] }
             ],
             'J': [
                 { home: 'Аргентина', away: 'Алжир', homeScore: 3, awayScore: 0, date: '2026-06-17',
@@ -1725,73 +1798,75 @@ team: 'home' }] }
                     shotsTotalAway: 7, bigChancesHome: 1, bigChancesAway: 0, shotsOnHome: 6,
                     shotsOnAway: 0, possessionHome: 48, possessionAway: 52, cornersHome: 2,
                     cornersAway: 2, scorers: [{ player: 'Месси', minute: '17',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Месси', minute: '60',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Месси', minute: '76',
-                        team: 'home' }
+                        team: 'home', assist: null }
                     ] },
                 { home: 'Австрия', away: 'Иордания', homeScore: 3, awayScore: 1, date: '2026-06-17',
                     time: '09:00', yellowHome: 1, yellowAway: 0, redHome: 0, redAway: 0, shotsTotalHome: 11,
                     shotsTotalAway: 11, bigChancesHome: 4, bigChancesAway: 0, shotsOnHome: 4,
                     shotsOnAway: 4, possessionHome: 63, possessionAway: 37, cornersHome: 4,
                     cornersAway: 3, scorers: [{ player: 'Шмид', minute: '21',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Ал Араб (АГ)', minute: '76',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Арнаутович (Пен)', minute: '90+12',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Олмен', minute: '50',
-                        team: 'away' }
+                        team: 'away', assist: null }
                     ] },
                 { home: 'Иордания', away: 'Алжир', homeScore: 1, awayScore: 2, date: '2026-06-23',
                     time: '08:00', yellowHome: 1, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 8,
                     shotsTotalAway: 17, bigChancesHome: 1, bigChancesAway: 3, shotsOnHome: 4,
                     shotsOnAway: 8, possessionHome: 28, possessionAway: 72, cornersHome: 1,
                     cornersAway: 10, scorers: [{ player: 'Аль-Рашдан', minute: '36',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Бенбуали', minute: '69',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Гуири', minute: '82',
-                        team: 'away' }
+                        team: 'away', assist: null }
                     ] },
                 { home: 'Аргентина', away: 'Австрия', homeScore: 2, awayScore: 0, date: '2026-06-22',
                     time: '22:00', yellowHome: 2, yellowAway: 2, redHome: 0, redAway: 0, shotsTotalHome: 12,
                     shotsTotalAway: 6, bigChancesHome: 3, bigChancesAway: 1, shotsOnHome: 5,
                     shotsOnAway: 1, possessionHome: 54, possessionAway: 46, cornersHome: 1,
                     cornersAway: 3, scorers: [{ player: 'Месси', minute: '38',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Месси', minute: '90+5',
-                        team: 'home' }
+                        team: 'home', assist: null }
                     ] },
                 { home: 'Иордания', away: 'Аргентина', homeScore: 1, awayScore: 3, date: '2026-06-27',
                     time: '07:00', yellowHome: 3, yellowAway: 0, redHome: 0, redAway: 0, shotsTotalHome: 5,
                     shotsTotalAway: 12, bigChancesHome: 1, bigChancesAway: 3, shotsOnHome: 1,
                     shotsOnAway: 4, possessionHome: 27, possessionAway: 73, cornersHome: 2,
                     cornersAway: 6, scorers: [{ player: 'Аль-Тамари', minute: '55',
-team: 'home' },
-{ player: 'Ло Селсо', minute: '19',
-team: 'away' },
-{ player: 'Мартинес (Пен)', minute: '31',
-team: 'away' },
-{ player: 'Месси', minute: '80',
-team: 'away' }] },
+                            team: 'home', assist: null },
+                        { player: 'Ло Селсо', minute: '19',
+                            team: 'away', assist: null },
+                        { player: 'Мартинес (Пен)', minute: '31',
+                            team: 'away', assist: null },
+                        { player: 'Месси', minute: '80',
+                            team: 'away', assist: null }
+                    ] },
                 { home: 'Алжир', away: 'Австрия', homeScore: 3, awayScore: 3, date: '2026-06-27',
                     time: '07:00', yellowHome: 0, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 12,
                     shotsTotalAway: 10, bigChancesHome: 3, bigChancesAway: 2, shotsOnHome: 5,
                     shotsOnAway: 3, possessionHome: 65, possessionAway: 35, cornersHome: 0,
                     cornersAway: 3, scorers: [{ player: 'Белгали', minute: '45',
-team: 'home' },
-{ player: 'Марез', minute: '60',
-team: 'home' },
-{ player: 'Марез', minute: '90+3',
-team: 'home' },
-{ player: 'Арнаутович', minute: '28',
-team: 'away' },
-{ player: 'Забитцер', minute: '55',
-team: 'away' },
-{ player: 'Каладжич', minute: '90+6',
-team: 'away' }] }
+                            team: 'home', assist: null },
+                        { player: 'Марез', minute: '60',
+                            team: 'home', assist: null },
+                        { player: 'Марез', minute: '90+3',
+                            team: 'home', assist: null },
+                        { player: 'Арнаутович', minute: '28',
+                            team: 'away', assist: null },
+                        { player: 'Забитцер', minute: '55',
+                            team: 'away', assist: null },
+                        { player: 'Каладжич', minute: '90+6',
+                            team: 'away', assist: null }
+                    ] }
             ],
             'K': [
                 { home: 'Португалия', away: 'ДР Конго', homeScore: 1, awayScore: 1, date: '2026-06-17',
@@ -1799,43 +1874,43 @@ team: 'away' }] }
                     shotsTotalAway: 8, bigChancesHome: 0, bigChancesAway: 1, shotsOnHome: 1,
                     shotsOnAway: 2, possessionHome: 75, possessionAway: 25, cornersHome: 5,
                     cornersAway: 4, scorers: [{ player: 'Невеш', minute: '6',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Висса', minute: '45+5',
-                        team: 'away' }
+                        team: 'away', assist: null }
                     ] },
                 { home: 'Узбекистан', away: 'Колумбия', homeScore: 1, awayScore: 3, date: '2026-06-18',
                     time: '07:00', yellowHome: 1, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 8,
                     shotsTotalAway: 15, bigChancesHome: 1, bigChancesAway: 4, shotsOnHome: 2,
                     shotsOnAway: 4, possessionHome: 39, possessionAway: 61, cornersHome: 4,
                     cornersAway: 4, scorers: [{ player: 'Муньос', minute: '40',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Файзуллаев', minute: '60',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Диас', minute: '65',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Кампаз', minute: '90+9',
-                        team: 'away' }
+                        team: 'away', assist: null }
                     ] },
                 { home: 'Колумбия', away: 'ДР Конго', homeScore: 1, awayScore: 0, date: '2026-06-25',
                     time: '00:00', yellowHome: 2, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 20,
                     shotsTotalAway: 7, bigChancesHome: 2, bigChancesAway: 0, shotsOnHome: 9,
                     shotsOnAway: 1, possessionHome: 64, possessionAway: 36, cornersHome: 5,
                     cornersAway: 4, scorers: [{ player: 'Муньос', minute: '76',
-                        team: 'home' }] },
+                        team: 'home', assist: null }] },
                 { home: 'Португалия', away: 'Узбекистан', homeScore: 5, awayScore: 0, date: '2026-06-23',
                     time: '22:00', yellowHome: 1, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 17,
                     shotsTotalAway: 7, bigChancesHome: 7, bigChancesAway: 0, shotsOnHome: 9,
                     shotsOnAway: 2, possessionHome: 66, possessionAway: 34, cornersHome: 3,
                     cornersAway: 2, scorers: [{ player: 'Роналду', minute: '6',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Мендеш', minute: '17',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Роналду', minute: '39',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Ниматов (АГ)', minute: '60',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Леау', minute: '87',
-                        team: 'home' }
+                        team: 'home', assist: null }
                     ] },
                 { home: 'Колумбия', away: 'Португалия', homeScore: 0, awayScore: 0, date: '2026-06-28',
                     time: '04:30', yellowHome: 1, yellowAway: 0, redHome: 0, redAway: 0, shotsTotalHome: 24,
@@ -1847,13 +1922,14 @@ team: 'away' }] }
                     shotsTotalAway: 4, bigChancesHome: 3, bigChancesAway: 0, shotsOnHome: 4,
                     shotsOnAway: 1, possessionHome: 58, possessionAway: 42, cornersHome: 2,
                     cornersAway: 4, scorers: [{ player: 'Шомуродов', minute: '10',
-team: 'away' },
-{ player: 'Висса (Пен)', minute: '68',
-team: 'home' },
-{ player: 'Майеле', minute: '78',
-team: 'home' },
-{ player: 'Висса', minute: '90+1',
-team: 'home' }] }
+                            team: 'away', assist: null },
+                        { player: 'Висса (Пен)', minute: '68',
+                            team: 'home', assist: null },
+                        { player: 'Майеле', minute: '78',
+                            team: 'home', assist: null },
+                        { player: 'Висса', minute: '90+1',
+                            team: 'home', assist: null }
+                    ] }
             ],
             'L': [
                 { home: 'Англия', away: 'Хорватия', homeScore: 4, awayScore: 2, date: '2026-06-18',
@@ -1861,30 +1937,30 @@ team: 'home' }] }
                     shotsTotalAway: 10, bigChancesHome: 7, bigChancesAway: 2, shotsOnHome: 11,
                     shotsOnAway: 5, possessionHome: 52, possessionAway: 48, cornersHome: 8,
                     cornersAway: 2, scorers: [{ player: 'Кейн (Пен)', minute: '12',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Кейн', minute: '42',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Беллингем', minute: '47',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Рэшфорд', minute: '85',
-                        team: 'home' },
+                        team: 'home', assist: null },
                     { player: 'Батурина', minute: '36',
-                        team: 'away' },
+                        team: 'away', assist: null },
                     { player: 'Муса', minute: '45+5',
-                        team: 'away' }
+                        team: 'away', assist: null }
                     ] },
                 { home: 'Гана', away: 'Панама', homeScore: 1, awayScore: 0, date: '2026-06-18', time: '04:00',
                     yellowHome: 1, yellowAway: 2, redHome: 0, redAway: 0, shotsTotalHome: 7, shotsTotalAway: 11,
                     bigChancesHome: 1, bigChancesAway: 2, shotsOnHome: 2, shotsOnAway: 4,
                     possessionHome: 38, possessionAway: 62, cornersHome: 2, cornersAway: 2,
                     scorers: [{ player: 'Йиренкий', minute: '90+5',
-                        team: 'home' }] },
+                        team: 'home', assist: null }] },
                 { home: 'Панама', away: 'Хорватия', homeScore: 0, awayScore: 1, date: '2026-06-24',
                     time: '07:00', yellowHome: 1, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 8,
                     shotsTotalAway: 6, bigChancesHome: 1, bigChancesAway: 3, shotsOnHome: 1,
                     shotsOnAway: 2, possessionHome: 42, possessionAway: 58, cornersHome: 7,
                     cornersAway: 2, scorers: [{ player: 'Будимир', minute: '54',
-                        team: 'away' }] },
+                        team: 'away', assist: null }] },
                 { home: 'Англия', away: 'Гана', homeScore: 0, awayScore: 0, date: '2026-06-24', time: '01:00',
                     yellowHome: 1, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 19, shotsTotalAway: 2,
                     bigChancesHome: 2, bigChancesAway: 1, shotsOnHome: 3, shotsOnAway: 1,
@@ -1895,19 +1971,21 @@ team: 'home' }] }
                     shotsTotalAway: 17, bigChancesHome: 0, bigChancesAway: 4, shotsOnHome: 2,
                     shotsOnAway: 6, possessionHome: 33, possessionAway: 67, cornersHome: 3,
                     cornersAway: 7, scorers: [{ player: 'Беллингем', minute: '62',
-team: 'away' },
-{ player: 'Кейн', minute: '67',
-team: 'away' }] },
+                            team: 'away', assist: null },
+                        { player: 'Кейн', minute: '67',
+                            team: 'away', assist: null }
+                    ] },
                 { home: 'Хорватия', away: 'Гана', homeScore: 2, awayScore: 1, date: '2026-06-28',
                     time: '02:00', yellowHome: 1, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 8,
                     shotsTotalAway: 6, bigChancesHome: 0, bigChancesAway: 2, shotsOnHome: 4,
                     shotsOnAway: 1, possessionHome: 53, possessionAway: 47, cornersHome: 3,
                     cornersAway: 2, scorers: [{ player: 'Сушич', minute: '31',
-team: 'home' },
-{ player: 'Влашич', minute: '83',
-team: 'home' },
-{ player: 'Лукассен', minute: '73',
-team: 'away' }] }
+                            team: 'home', assist: null },
+                        { player: 'Влашич', minute: '83',
+                            team: 'home', assist: null },
+                        { player: 'Лукассен', minute: '73',
+                            team: 'away', assist: null }
+                    ] }
             ]
         };
 
@@ -1939,7 +2017,7 @@ team: 'away' }] }
                     shotsTotalHome: 6, shotsTotalAway: 12, bigChancesHome: 0, bigChancesAway: 4,
                     shotsOnHome: 1, shotsOnAway: 7, possessionHome: 58, possessionAway: 42,
                     cornersHome: 1, cornersAway: 4, scorers: [{ player: 'Эуштакиу', minute: '90+2',
-team: 'away' }] },
+                            team: 'away', assist: null }] },
                 { home: 'Мексика', away: 'Эквадор', homeScore: null, awayScore: null, date: '2026-07-01', time: '06:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
@@ -2245,6 +2323,7 @@ team: 'away' }] },
         function getOverallStats() {
             const teamStats = {};
             const allScorers = [];
+            const allAssists = [];
 
             // Групповой этап
             GROUPS.forEach(gid => {
@@ -2280,6 +2359,15 @@ team: 'away' }] },
                                 isPenalty: s.player.toLowerCase().includes('пен') || s.player
                                     .toLowerCase().includes('pen')
                             });
+                            // Ассистенты (теперь все null, но оставляем логику)
+                            if (s.assist && s.assist !== 'null' && s.assist !== null) {
+                                const assistName = cleanPlayerNameForStats(s.assist);
+                                allAssists.push({
+                                    player: assistName,
+                                    team: s.team === 'home' ? m.home : m.away,
+                                    assists: 1
+                                });
+                            }
                         });
                     }
                 });
@@ -2375,6 +2463,14 @@ team: 'away' }] },
                                 isPenalty: s.player.toLowerCase().includes('пен') || s.player
                                     .toLowerCase().includes('pen')
                             });
+                            if (s.assist && s.assist !== 'null' && s.assist !== null) {
+                                const assistName = cleanPlayerNameForStats(s.assist);
+                                allAssists.push({
+                                    player: assistName,
+                                    team: s.team === 'home' ? m.home : m.away,
+                                    assists: 1
+                                });
+                            }
                         });
                     }
                 });
@@ -2400,6 +2496,16 @@ team: 'away' }] },
             });
             const topScorers = Object.values(scorerStats).sort((a, b) => b.goals - a.goals).slice(0, 10);
 
+            // Лучшие ассистенты (все null, но раздел остается)
+            const assistStats = {};
+            allAssists.forEach(a => {
+                if (!assistStats[a.player]) {
+                    assistStats[a.player] = { player: a.player, team: a.team, assists: 0 };
+                }
+                assistStats[a.player].assists += a.assists;
+            });
+            const topAssists = Object.values(assistStats).sort((a, b) => b.assists - a.assists).slice(0, 10);
+
             const teamArr = Object.values(teamStats);
             teamArr.sort((a, b) => {
                 if (a.points !== b.points) return b.points - a.points;
@@ -2421,6 +2527,7 @@ team: 'away' }] },
             return {
                 teams: teamArr,
                 topScorers,
+                topAssists,
                 bestAttack,
                 bestDefense,
                 mostYellow,
@@ -2432,6 +2539,7 @@ team: 'away' }] },
 
         function cleanPlayerNameForStats(name) {
             if (!name) return name;
+            // Убираем (Пен), (АГ) и т.д.
             return name.replace(/\s*\([^)]*\)\s*$/g, '').trim();
         }
 
@@ -2678,6 +2786,28 @@ team: 'away' }] },
                 html += `</tbody></table></div>`;
             }
 
+            if (stats.topAssists && stats.topAssists.length > 0) {
+                html += `<div class="stats-section-title">Лучшие ассистенты</div>
+                        <div style="overflow-x:auto;margin-bottom:20px;">
+                            <table>
+                                <thead><tr>
+                                    <th>#</th>
+                                    <th>Игрок</th>
+                                    <th>Команда</th>
+                                    <th style="text-align:center;color:#ffeb3b;">Ассисты</th>
+                                </tr></thead>
+                                <tbody>`;
+                stats.topAssists.forEach((s, i) => {
+                    html += `<tr>
+                                <td>${i + 1}</td>
+                                <td>${s.player}</td>
+                                <td>${s.team}</td>
+                                <td style="color:#ffeb3b;text-align:center;font-weight:700;">${s.assists}</td>
+                            </tr>`;
+                });
+                html += `</tbody></table></div>`;
+            }
+
             if (stats.bestAttack && stats.bestAttack.length > 0) {
                 html += `<div class="stats-section-title">Лучшая атака</div>
                         <div style="overflow-x:auto;margin-bottom:20px;">
@@ -2840,6 +2970,33 @@ team: 'away' }] },
             container.innerHTML = html;
         }
 
+        // =============================================================
+        // Парсинг минуты для определения тайма
+        // =============================================================
+        function parseMinuteForHalf(minuteStr) {
+            if (!minuteStr) return 0;
+            const str = String(minuteStr).trim();
+            // Если есть +, например "45+2" или "90+3"
+            if (str.includes('+')) {
+                const parts = str.split('+');
+                const base = parseInt(parts[0]) || 0;
+                const extra = parseInt(parts[1]) || 0;
+                return base + extra;
+            }
+            return parseInt(str) || 0;
+        }
+
+        function getHalf(minuteStr) {
+            const minuteNum = parseMinuteForHalf(minuteStr);
+            // 45+1, 45+2 и т.д. - это первый тайм (добавленное время)
+            // 46 и выше - второй тайм
+            if (minuteNum <= 45) return 1;
+            return 2;
+        }
+
+        // =============================================================
+        // ОТКРЫТИЕ ДЕТАЛЬНОГО ОКНА С ВКЛАДКАМИ
+        // =============================================================
         function openMatchDetail(groupId, match) {
             const overlay = document.getElementById('matchDetailOverlay');
             const content = document.getElementById('matchDetailContent');
@@ -2848,23 +3005,6 @@ team: 'away' }] },
             const flagHome = FLAGS[match.home] || '🏴';
             const flagAway = FLAGS[match.away] || '🏴';
 
-            let homeScorersHtml = '';
-            let awayScorersHtml = '';
-            if (isPlayed && match.scorers && match.scorers.length > 0) {
-                const homeGoals = match.scorers.filter(s => s.team === 'home');
-                const awayGoals = match.scorers.filter(s => s.team === 'away');
-                if (homeGoals.length > 0) {
-                    homeScorersHtml = homeGoals.map(s =>
-                        `<span class="goal"><span class="minute">${s.minute}'</span> ${displayPlayerName(s.player)}</span>`
-                    ).join('');
-                }
-                if (awayGoals.length > 0) {
-                    awayScorersHtml = awayGoals.map(s =>
-                        `<span class="goal">${displayPlayerName(s.player)} <span class="minute">${s.minute}'</span></span>`
-                    ).join('');
-                }
-            }
-
             let roundLabel = groupId;
             if (groupId && groupId.includes('финала')) {
                 roundLabel = groupId;
@@ -2872,37 +3012,84 @@ team: 'away' }] },
                 roundLabel = `Группа ${groupId}`;
             }
 
-            let html = `
-                <div class="detail-header">
-                    <span class="group-badge">${roundLabel}</span>
-                    <div class="datetime">${dateFormatted} ${match.time || ''}</div>
-                </div>
-                <div class="detail-score">
-                    <div class="team-block home">
-                        <span class="flag">${flagHome}</span>
-                    </div>
-                    <span class="score-big ${isPlayed ? '' : 'empty'}">${isPlayed ? `${match.homeScore} : ${match.awayScore}` : '— : —'}</span>
-                    <div class="team-block away">
-                        <span class="flag">${flagAway}</span>
-                    </div>
-                </div>`;
+            // ---- Формируем ход матча с таймами ----
+            let firstHalfGoals = [];
+            let secondHalfGoals = [];
 
-            if (isPlayed) {
-                html += `<div class="detail-scorers">
-                            <div class="scorers-col home-col">
-                                ${homeScorersHtml || '<span class="scorers-empty">—</span>'}
-                            </div>
-                            <div class="scorers-divider"></div>
-                            <div class="scorers-col right away-col">
-                                ${awayScorersHtml || '<span class="scorers-empty">—</span>'}
-                            </div>
-                        </div>`;
-            } else {
-                html += `<div class="detail-scorers" style="justify-content:center;border-bottom:1px solid rgba(255,255,255,0.06);margin-bottom:10px;padding-bottom:12px;">
-                            <span style="color:rgba(255,255,255,0.15);font-size:0.8rem;">Матч не сыгран</span>
-                        </div>`;
+            if (isPlayed && match.scorers && match.scorers.length > 0) {
+                match.scorers.forEach(s => {
+                    const half = getHalf(s.minute);
+                    if (half === 1) {
+                        firstHalfGoals.push(s);
+                    } else {
+                        secondHalfGoals.push(s);
+                    }
+                });
+                // Сортируем по минутам
+                firstHalfGoals.sort((a, b) => parseMinuteForHalf(a.minute) - parseMinuteForHalf(b.minute));
+                secondHalfGoals.sort((a, b) => parseMinuteForHalf(a.minute) - parseMinuteForHalf(b.minute));
             }
 
+            let scorersHtml = '';
+
+            // Функция для отображения гола с ассистентом
+            function renderGoalLine(goal, isHome) {
+                const minute = goal.minute;
+                const player = displayPlayerName(goal.player);
+                const assist = goal.assist && goal.assist !== 'null' && goal.assist !== null ? displayPlayerName(goal.assist) : null;
+
+                let assistHtml = '';
+                if (assist) {
+                    if (isHome) {
+                        // home: ассистент после фамилии в скобках
+                        assistHtml = ` <span class="assist">(${assist})</span>`;
+                    } else {
+                        // away: ассистент перед фамилией в скобках
+                        assistHtml = `<span class="assist">(${assist}) </span>`;
+                    }
+                }
+
+                if (isHome) {
+                    // home: минута справа
+                    return `<div class="goal-line home-goal">
+                                <span class="minute">${minute}'</span>
+                                <span class="player-name">${player}${assistHtml}</span>
+                            </div>`;
+                } else {
+                    // away: минута слева
+                    return `<div class="goal-line away-goal">
+                                <span class="player-name">${assistHtml}${player}</span>
+                                <span class="minute">${minute}'</span>
+                            </div>`;
+                }
+            }
+
+            // Первый тайм
+            scorersHtml += `<div class="half-title">1 Тайм</div>`;
+            if (firstHalfGoals.length > 0) {
+                firstHalfGoals.forEach(g => {
+                    scorersHtml += renderGoalLine(g, g.team === 'home');
+                });
+            } else {
+                scorersHtml += `<div class="scorers-empty" style="padding-left:4px;">—</div>`;
+            }
+
+            // Второй тайм
+            scorersHtml += `<div class="half-title">2 Тайм</div>`;
+            if (secondHalfGoals.length > 0) {
+                secondHalfGoals.forEach(g => {
+                    scorersHtml += renderGoalLine(g, g.team === 'home');
+                });
+            } else {
+                scorersHtml += `<div class="scorers-empty" style="padding-left:4px;">—</div>`;
+            }
+
+            if (!isPlayed) {
+                scorersHtml = `<div class="scorers-empty">Матч не сыгран</div>`;
+            }
+
+            // ---- Статистика ----
+            let statsHtml = '';
             if (isPlayed) {
                 const statsOrder = [
                     { label: 'Владение мячом', home: match.possessionHome || 50, away: match.possessionAway || 50,
@@ -2919,7 +3106,6 @@ team: 'away' }] },
                     { label: 'Красные карточки', home: match.redHome || 0, away: match.redAway || 0, format: '' }
                 ];
 
-                html += `<div style="margin:8px 0;">`;
                 statsOrder.forEach(stat => {
                     const total = stat.home + stat.away;
                     const homePct = total > 0 ? (stat.home / total * 100) : 50;
@@ -2932,25 +3118,77 @@ team: 'away' }] },
                         tooltipHtml = `<span class="info-icon">ⓘ<span class="tooltip">${stat.tooltip}</span></span>`;
                     }
 
-                    html += `<div class="stat-row">
-                                <div class="stat-label">${stat.label} ${tooltipHtml}</div>
-                                <div class="stat-bar-wrap">
-                                    <div class="stat-values"><span class="home-val">${homeVal}${stat.format}</span></div>
-                                    <div class="stat-bar">
-                                        <div class="bar-home" style="width:${homePct}%;"></div>
-                                        <div class="bar-away" style="width:${awayPct}%;"></div>
-                                    </div>
-                                    <div class="stat-values"><span class="away-val">${awayVal}${stat.format}</span></div>
+                    statsHtml += `
+                        <div class="stat-row">
+                            <div class="stat-label">${stat.label} ${tooltipHtml}</div>
+                            <div class="stat-bar-wrap">
+                                <div class="stat-values"><span class="home-val">${homeVal}${stat.format}</span></div>
+                                <div class="stat-bar">
+                                    <div class="bar-home" style="width:${homePct}%;"></div>
+                                    <div class="bar-away" style="width:${awayPct}%;"></div>
                                 </div>
-                            </div>`;
+                                <div class="stat-values"><span class="away-val">${awayVal}${stat.format}</span></div>
+                            </div>
+                        </div>
+                    `;
                 });
-                html += `</div>`;
             } else {
-                html += `<div class="not-played">Матч ещё не сыгран</div>`;
+                statsHtml = `<div class="not-played">Матч ещё не сыгран</div>`;
             }
+
+            // ---- Основная разметка ----
+            let html = `
+                <div class="detail-header">
+                    <span class="group-badge">${roundLabel}</span>
+                    <div class="datetime">${dateFormatted} ${match.time || ''}</div>
+                </div>
+                <div class="detail-score">
+                    <div class="team-block home">
+                        <span class="flag">${flagHome}</span>
+                    </div>
+                    <span class="score-big ${isPlayed ? '' : 'empty'}">${isPlayed ? `${match.homeScore} : ${match.awayScore}` : '— : —'}</span>
+                    <div class="team-block away">
+                        <span class="flag">${flagAway}</span>
+                    </div>
+                </div>
+
+                <!-- Вкладки (текстовые переключатели по центру) -->
+                <div class="detail-tabs">
+                    <button class="detail-tab-btn active" data-detail-tab="timeline">Ход матча</button>
+                    <button class="detail-tab-btn" data-detail-tab="stats">Статистика</button>
+                </div>
+
+                <!-- Ход матча -->
+                <div class="detail-tab-content active" id="detailTabTimeline">
+                    <div class="detail-scorers">
+                        ${scorersHtml}
+                    </div>
+                </div>
+
+                <!-- Статистика -->
+                <div class="detail-tab-content" id="detailTabStats">
+                    <div class="detail-stats">
+                        ${statsHtml}
+                    </div>
+                </div>
+            `;
 
             content.innerHTML = html;
             overlay.classList.add('active');
+
+            // Инициализация вкладок внутри модального окна
+            const tabBtns = content.querySelectorAll('.detail-tab-btn');
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const tabId = this.dataset.detailTab;
+                    content.querySelectorAll('.detail-tab-content').forEach(el => el.classList.remove(
+                    'active'));
+                    const target = content.querySelector(`#detailTab${tabId.charAt(0).toUpperCase() + tabId.slice(1)}`);
+                    if (target) target.classList.add('active');
+                });
+            });
         }
 
         // =============================================================
@@ -3022,12 +3260,10 @@ team: 'away' }] },
                             <div class="match-teams">
                                 <div class="team">
                                     <span class="flag">${flagHome}</span>
-                                    <span class="team-name">${m.home || '—'}</span>
                                 </div>
                                 <span class="score-center ${isPlayed ? '' : 'empty'}">${scoreText}</span>
                                 <div class="team">
                                     <span class="flag">${flagAway}</span>
-                                    <span class="team-name">${m.away || '—'}</span>
                                 </div>
                             </div>
                             <div class="match-status ${isPlayed ? 'played' : ''}">${isPlayed ? 'Сыгран' : 'Ожидается'}</div>
