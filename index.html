@@ -385,10 +385,35 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 2px;
+            gap: 4px;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+        .schedule-card .match-teams .score-center .penalty-score {
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.35);
+            font-weight: 600;
+            width: 100%;
+            text-align: center;
         }
         .schedule-card .match-teams .score-center .red-card-badge {
+            display: inline-block;
+            background: #ff1744;
+            color: white;
+            font-weight: 800;
+            font-size: 0.6rem;
+            padding: 0 5px;
+            border-radius: 3px;
+            line-height: 18px;
+            min-width: 18px;
+            text-align: center;
             flex-shrink: 0;
+        }
+        .schedule-card .match-teams .score-center .red-card-badge.home-red {
+            order: -1;
+        }
+        .schedule-card .match-teams .score-center .red-card-badge.away-red {
+            order: 1;
         }
         .schedule-card .match-teams .score-center.played {
             color: #ffeb3b;
@@ -476,6 +501,12 @@
             align-items: center;
             padding: 10px 0 4px 0;
             gap: 8px;
+            flex-direction: column;
+        }
+        .match-detail-modal .detail-score .score-main {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         .match-detail-modal .detail-score .team-block {
             display: flex;
@@ -499,8 +530,13 @@
         .match-detail-modal .detail-score .score-big.empty {
             color: rgba(255, 255, 255, 0.1);
         }
+        .match-detail-modal .detail-score .penalty-info {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.35);
+            font-weight: 600;
+            margin-top: 2px;
+        }
 
-        /* Вкладки в детальном окне - текстовые переключатели по центру */
         .detail-tabs {
             display: flex;
             justify-content: center;
@@ -544,7 +580,6 @@
             display: block;
         }
 
-        /* Ход матча с таймами */
         .detail-scorers {
             display: flex;
             flex-direction: column;
@@ -603,8 +638,17 @@
             text-align: center;
             padding: 4px 0;
         }
+        .detail-scorers .et-title {
+            text-align: left;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #ffeb3b;
+            letter-spacing: 0.5px;
+            padding: 6px 0 2px 0;
+            border-top: 1px solid rgba(255, 235, 59, 0.15);
+            margin-top: 4px;
+        }
 
-        /* Статистика */
         .detail-stats {
             display: flex;
             flex-direction: column;
@@ -672,9 +716,6 @@
             box-shadow: 0 12px 48px rgba(33, 150, 243, 0.4);
             line-height: 1.5;
             white-space: normal;
-        }
-        .detail-stats .stat-row .stat-label .info-icon .tooltip::after {
-            display: none;
         }
         .detail-stats .stat-row .stat-label .info-icon:hover .tooltip {
             display: block;
@@ -812,7 +853,6 @@
             margin-top: 0;
         }
 
-        /* Стили для плей-офф */
         .playoff-container {
             display: flex;
             flex-direction: column;
@@ -888,6 +928,14 @@
             justify-content: space-between;
             align-items: center;
             gap: 8px;
+            flex-direction: column;
+        }
+        .playoff-match-card .match-teams .teams-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            gap: 8px;
         }
         .playoff-match-card .match-teams .team {
             display: flex;
@@ -910,6 +958,14 @@
             flex-shrink: 0;
             text-align: center;
             color: #ffeb3b;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .playoff-match-card .match-teams .score-center .penalty-score {
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: 600;
         }
         .playoff-match-card .match-teams .score-center.empty {
             color: rgba(255, 255, 255, 0.1);
@@ -1195,7 +1251,6 @@
             'Панама': '🇵🇦'
         };
 
-        // Все ассистенты установлены в null
         const MATCHES_DATA = {
             'A': [
                 { home: 'Мексика', away: 'ЮАР', homeScore: 2, awayScore: 0, date: '2026-06-12', time: '00:00',
@@ -1566,14 +1621,11 @@
                     time: '04:00', yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0, shotsTotalHome: 10,
                     shotsTotalAway: 20, bigChancesHome: 2, bigChancesAway: 2, shotsOnHome: 4,
                     shotsOnAway: 7, possessionHome: 29, possessionAway: 71, cornersHome: 4,
-                    cornersAway: 6, scorers: [{ player: 'Мастоури', minute: '54',
-                            team: 'away', assist: null },
-                        { player: 'Шхири (АГ)', minute: '3',
-                            team: 'home', assist: null },
-                        { player: 'Бробби', minute: '7',
-                            team: 'home', assist: null },
-                        { player: 'Ван Хекке', minute: '62',
-                            team: 'home', assist: null }
+                    cornersAway: 6, scorers: [
+                        { player: 'Бробби', minute: '7', team: 'away', assist: null },
+                        { player: 'Ван Хекке', minute: '62', team: 'away', assist: null },
+                        { player: 'Мастоури', minute: '54', team: 'away', assist: null },
+                        { player: 'Шхири (АГ)', minute: '3', team: 'home', assist: null }
                     ] },
                 { home: 'Япония', away: 'Швеция', homeScore: 1, awayScore: 1, date: '2026-06-26',
                     time: '04:00', yellowHome: 1, yellowAway: 2, redHome: 0, redAway: 0, shotsTotalHome: 8,
@@ -1989,180 +2041,190 @@
             ]
         };
 
-        // Данные плей-офф с собственными датами
         const PLAYOFF_DATA = {
             '1/16 финала': [
-                { home: 'Германия', away: 'Парагвай', homeScore: null, awayScore: null, date: '2026-06-30', time: '01:30',
-                    yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
-                    shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
-                    shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
-                { home: 'Бразилия', away: 'Япония', homeScore: null, awayScore: null, date: '2026-06-29', time: '22:00',
-                    yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
-                    shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
-                    shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
+                { home: 'Германия', away: 'Парагвай', homeScore: 1, awayScore: 1, date: '2026-06-30', time: '01:30',
+                    yellowHome: 2, yellowAway: 2, redHome: 0, redAway: 0,
+                    shotsTotalHome: 21, shotsTotalAway: 7, bigChancesHome: 2, bigChancesAway: 3,
+                    shotsOnHome: 6, shotsOnAway: 3, possessionHome: 76, possessionAway: 24,
+                    cornersHome: 16, cornersAway: 7, scorers: [{ player: 'Хаверц', minute: '54',
+team: 'home', assist: 'Вирц' },
+{ player: 'Энсисо', minute: '42',
+team: 'away', assist: 'Галарза' }], penaltyHome: 3, penaltyAway: 4 },
+                { home: 'Бразилия', away: 'Япония', homeScore: 2, awayScore: 1, date: '2026-06-29', time: '22:00',
+                    yellowHome: 2, yellowAway: 3, redHome: 0, redAway: 0,
+                    shotsTotalHome: 19, shotsTotalAway: 5, bigChancesHome: 5, bigChancesAway: 0,
+                    shotsOnHome: 7, shotsOnAway: 2, possessionHome: 69, possessionAway: 31,
+                    cornersHome: 6, cornersAway: 2, scorers: [{ player: 'Сано', minute: '29',
+team: 'away', assist: null },
+{ player: 'Каземиро', minute: '56',
+team: 'home', assist: 'Габриэль' },
+{ player: 'Мартинелли', minute: '90+5',
+team: 'home', assist: 'Гимараэс' }], penaltyHome: null, penaltyAway: null },
                 { home: 'Франция', away: 'Швеция', homeScore: null, awayScore: null, date: '2026-07-01', time: '02:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null },
                 { home: 'Кот-д’Ивуар', away: 'Норвегия', homeScore: null, awayScore: null, date: '2026-06-30', time: '22:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null },
                 { home: 'ЮАР', away: 'Канада', homeScore: 0, awayScore: 1, date: '2026-06-29', time: '00:00',
                     yellowHome: 0, yellowAway: 2, redHome: 0, redAway: 0,
                     shotsTotalHome: 6, shotsTotalAway: 12, bigChancesHome: 0, bigChancesAway: 4,
                     shotsOnHome: 1, shotsOnAway: 7, possessionHome: 58, possessionAway: 42,
                     cornersHome: 1, cornersAway: 4, scorers: [{ player: 'Эуштакиу', minute: '90+2',
-                            team: 'away', assist: null }] },
+                            team: 'away', assist: null }], penaltyHome: null, penaltyAway: null },
                 { home: 'Мексика', away: 'Эквадор', homeScore: null, awayScore: null, date: '2026-07-01', time: '06:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
-                { home: 'Нидерланды', away: 'Марокко', homeScore: null, awayScore: null, date: '2026-06-30', time: '06:00',
-                    yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
-                    shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
-                    shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null },
+                { home: 'Нидерланды', away: 'Марокко', homeScore: 1, awayScore: 1, date: '2026-06-30', time: '06:00',
+                    yellowHome: 0, yellowAway: 1, redHome: 0, redAway: 0,
+                    shotsTotalHome: 6, shotsTotalAway: 11, bigChancesHome: 1, bigChancesAway: 5,
+                    shotsOnHome: 2, shotsOnAway: 5, possessionHome: 30, possessionAway: 70,
+                    cornersHome: 5, cornersAway: 8, scorers: [{ player: 'Гакпо', minute: '72',
+team: 'home', assist: 'Саммервилл' },
+{ player: 'Диоп', minute: '90+1',
+team: 'away', assist: 'Тальби' }], penaltyHome: 2, penaltyAway: 3 },
                 { home: 'Англия', away: 'ДР Конго', homeScore: null, awayScore: null, date: '2026-07-01', time: '21:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null },
                 { home: 'Португалия', away: 'Хорватия', homeScore: null, awayScore: null, date: '2026-07-03', time: '04:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null },
                 { home: 'Аргентина', away: 'Кабо-Верде', homeScore: null, awayScore: null, date: '2026-07-04', time: '03:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null },
                 { home: 'Испания', away: 'Австрия', homeScore: null, awayScore: null, date: '2026-07-03', time: '00:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null },
                 { home: 'Австралия', away: 'Египет', homeScore: null, awayScore: null, date: '2026-07-03', time: '23:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null },
                 { home: 'США', away: 'Босния и Герцеговина', homeScore: null, awayScore: null, date: '2026-07-02', time: '05:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null },
                 { home: 'Швейцария', away: 'Алжир', homeScore: null, awayScore: null, date: '2026-07-03', time: '08:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null },
                 { home: 'Бельгия', away: 'Сенегал', homeScore: null, awayScore: null, date: '2026-07-02', time: '01:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null },
                 { home: 'Колумбия', away: 'Гана', homeScore: null, awayScore: null, date: '2026-07-04', time: '06:30',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] }
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null }
             ],
             '1/8 финала': [
-                { home: '', away: '', homeScore: null, awayScore: null, date: '2026-07-05', time: '02:00',
+                { home: 'Парагвай', away: '', homeScore: null, awayScore: null, date: '2026-07-05', time: '02:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
-                { home: '', away: '', homeScore: null, awayScore: null, date: '2026-07-06', time: '01:00',
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null },
+                { home: 'Бразилия', away: '', homeScore: null, awayScore: null, date: '2026-07-06', time: '01:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
-                { home: 'Канада', away: '', homeScore: null, awayScore: null, date: '2026-07-04', time: '22:00',
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null },
+                { home: 'Канада', away: 'Марокко', homeScore: null, awayScore: null, date: '2026-07-04', time: '22:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null },
                 { home: '', away: '', homeScore: null, awayScore: null, date: '2026-07-06', time: '05:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null },
                 { home: '', away: '', homeScore: null, awayScore: null, date: '2026-07-07', time: '00:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null },
                 { home: '', away: '', homeScore: null, awayScore: null, date: '2026-07-07', time: '21:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null },
                 { home: '', away: '', homeScore: null, awayScore: null, date: '2026-07-07', time: '05:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null },
                 { home: '', away: '', homeScore: null, awayScore: null, date: '2026-07-08', time: '01:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] }
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null }
             ],
             '1/4 финала': [
                 { home: '', away: '', homeScore: null, awayScore: null, date: '2026-07-10', time: '01:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null },
                 { home: '', away: '', homeScore: null, awayScore: null, date: '2026-07-12', time: '02:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null },
                 { home: '', away: '', homeScore: null, awayScore: null, date: '2026-07-11', time: '00:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null },
                 { home: '', away: '', homeScore: null, awayScore: null, date: '2026-07-12', time: '06:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] }
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null }
             ],
             '1/2 финала': [
                 { home: '', away: '', homeScore: null, awayScore: null, date: '2026-07-15', time: '00:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] },
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null },
                 { home: '', away: '', homeScore: null, awayScore: null, date: '2026-07-16', time: '00:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] }
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null }
             ],
             'Матч за 3-е место': [
                 { home: '', away: '', homeScore: null, awayScore: null, date: '2026-07-19', time: '02:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] }
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null }
             ],
             'Финал': [
                 { home: '', away: '', homeScore: null, awayScore: null, date: '2026-07-20', time: '00:00',
                     yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0,
                     shotsTotalHome: 0, shotsTotalAway: 0, bigChancesHome: 0, bigChancesAway: 0,
                     shotsOnHome: 0, shotsOnAway: 0, possessionHome: 50, possessionAway: 50,
-                    cornersHome: 0, cornersAway: 0, scorers: [] }
+                    cornersHome: 0, cornersAway: 0, scorers: [], penaltyHome: null, penaltyAway: null }
             ]
         };
 
@@ -2263,7 +2325,6 @@
                     all.push({ group: gid, ...m });
                 });
             });
-            // Добавляем матчи плей-офф в расписание
             for (const [round, matches] of Object.entries(PLAYOFF_DATA)) {
                 matches.forEach(m => {
                     if (m.home && m.away) {
@@ -2325,7 +2386,6 @@
             const allScorers = [];
             const allAssists = [];
 
-            // Групповой этап
             GROUPS.forEach(gid => {
                 const table = computeTable(gid);
                 table.forEach(row => {
@@ -2359,7 +2419,6 @@
                                 isPenalty: s.player.toLowerCase().includes('пен') || s.player
                                     .toLowerCase().includes('pen')
                             });
-                            // Ассистенты (теперь все null, но оставляем логику)
                             if (s.assist && s.assist !== 'null' && s.assist !== null) {
                                 const assistName = cleanPlayerNameForStats(s.assist);
                                 allAssists.push({
@@ -2391,12 +2450,10 @@
                 });
             });
 
-            // Плей-офф
             for (const [round, matches] of Object.entries(PLAYOFF_DATA)) {
                 matches.forEach(m => {
                     if (m.homeScore === null || m.awayScore === null || !m.home || !m.away) return;
 
-                    // Инициализация команд
                     if (!teamStats[m.home]) {
                         teamStats[m.home] = { name: m.home, group: 'ПО', points: 0, goalsFor: 0,
                             goalsAgainst: 0, goalDiff: 0, played: 0, wins: 0, draws: 0,
@@ -2476,7 +2533,6 @@
                 });
             }
 
-            // Пересчет goalDiff
             Object.values(teamStats).forEach(s => {
                 s.goalDiff = s.goalsFor - s.goalsAgainst;
             });
@@ -2496,7 +2552,6 @@
             });
             const topScorers = Object.values(scorerStats).sort((a, b) => b.goals - a.goals).slice(0, 10);
 
-            // Лучшие ассистенты (все null, но раздел остается)
             const assistStats = {};
             allAssists.forEach(a => {
                 if (!assistStats[a.player]) {
@@ -2539,7 +2594,6 @@
 
         function cleanPlayerNameForStats(name) {
             if (!name) return name;
-            // Убираем (Пен), (АГ) и т.д.
             return name.replace(/\s*\([^)]*\)\s*$/g, '').trim();
         }
 
@@ -2573,6 +2627,261 @@
         function openMatchDetailFromTeam(groupId, home, away) {
             const match = MATCHES_DATA[groupId].find(m => m.home === home && m.away === away);
             if (match) openMatchDetail(groupId, match);
+        }
+
+        // =============================================================
+        // Функция для парсинга минуты с учетом добавочного времени
+        // =============================================================
+        function parseMinuteValue(minuteStr) {
+            if (!minuteStr) return 0;
+            const str = String(minuteStr).trim();
+            if (str.includes('+')) {
+                const parts = str.split('+');
+                const base = parseInt(parts[0]) || 0;
+                const extra = parseInt(parts[1]) || 0;
+                return base + extra / 100; // дробная часть для сортировки
+            }
+            return parseInt(str) || 0;
+        }
+
+        // Определение тайма:
+        // 1 = первый тайм (1-45)
+        // 2 = второй тайм (46-90, включая 90+1, 90+2 и т.д.)
+        // 3 = дополнительное время (91 и выше)
+        function getHalf(minuteStr) {
+            if (!minuteStr) return 2;
+            const str = String(minuteStr).trim();
+            const baseMinute = parseInt(str) || 0;
+            
+            // Если это 90+x (90+1, 90+2 и т.д.) - это второй тайм
+            if (str.includes('+') && baseMinute === 90) {
+                return 2;
+            }
+            
+            // Если минута >= 91 - дополнительное время
+            if (baseMinute >= 91) {
+                return 3;
+            }
+            
+            // 1-45 - первый тайм, 46-90 - второй
+            if (baseMinute <= 45) return 1;
+            return 2;
+        }
+
+        // =============================================================
+        // ОТКРЫТИЕ ДЕТАЛЬНОГО ОКНА С ВКЛАДКАМИ
+        // =============================================================
+        function openMatchDetail(groupId, match) {
+            const overlay = document.getElementById('matchDetailOverlay');
+            const content = document.getElementById('matchDetailContent');
+            const isPlayed = match.homeScore !== null && match.awayScore !== null;
+            const dateFormatted = match.date ? match.date.replace('2026-', '').replace('-', '.') : '—';
+            const flagHome = FLAGS[match.home] || '🏴';
+            const flagAway = FLAGS[match.away] || '🏴';
+
+            let roundLabel = groupId;
+            if (groupId && groupId.includes('финала')) {
+                roundLabel = groupId;
+            } else if (groupId && MATCHES_DATA[groupId]) {
+                roundLabel = `Группа ${groupId}`;
+            }
+
+            // ---- Формируем ход матча с таймами ----
+            let firstHalfGoals = [];
+            let secondHalfGoals = [];
+            let extraTimeGoals = [];
+
+            if (isPlayed && match.scorers && match.scorers.length > 0) {
+                // Сначала сортируем все голы по времени
+                const sortedScorers = [...match.scorers].sort((a, b) => {
+                    return parseMinuteValue(a.minute) - parseMinuteValue(b.minute);
+                });
+                
+                sortedScorers.forEach(s => {
+                    const half = getHalf(s.minute);
+                    if (half === 1) {
+                        firstHalfGoals.push(s);
+                    } else if (half === 2) {
+                        secondHalfGoals.push(s);
+                    } else if (half === 3) {
+                        extraTimeGoals.push(s);
+                    }
+                });
+            }
+
+            let scorersHtml = '';
+
+            function renderGoalLine(goal, isHome) {
+                const minute = goal.minute;
+                const player = displayPlayerName(goal.player);
+                const assist = goal.assist && goal.assist !== 'null' && goal.assist !== null ? displayPlayerName(goal.assist) : null;
+
+                let assistHtml = '';
+                if (assist) {
+                    if (isHome) {
+                        assistHtml = ` <span class="assist">(${assist})</span>`;
+                    } else {
+                        assistHtml = `<span class="assist">(${assist}) </span>`;
+                    }
+                }
+
+                if (isHome) {
+                    return `<div class="goal-line home-goal">
+                                <span class="minute">${minute}'</span>
+                                <span class="player-name">${player}${assistHtml}</span>
+                            </div>`;
+                } else {
+                    return `<div class="goal-line away-goal">
+                                <span class="player-name">${assistHtml}${player}</span>
+                                <span class="minute">${minute}'</span>
+                            </div>`;
+                }
+            }
+
+            // Проверяем, является ли матч плей-офф
+            const isPlayoff = groupId && (groupId.includes('финала') || groupId.includes('1/') || groupId.includes('Матч за'));
+
+            scorersHtml += `<div class="half-title">1 Тайм</div>`;
+            if (firstHalfGoals.length > 0) {
+                firstHalfGoals.forEach(g => {
+                    scorersHtml += renderGoalLine(g, g.team === 'home');
+                });
+            } else {
+                scorersHtml += `<div class="scorers-empty" style="padding-left:4px;">—</div>`;
+            }
+
+            scorersHtml += `<div class="half-title">2 Тайм</div>`;
+            if (secondHalfGoals.length > 0) {
+                secondHalfGoals.forEach(g => {
+                    scorersHtml += renderGoalLine(g, g.team === 'home');
+                });
+            } else {
+                scorersHtml += `<div class="scorers-empty" style="padding-left:4px;">—</div>`;
+            }
+
+            // Дополнительное время - только для плей-офф
+            if (isPlayoff && extraTimeGoals.length > 0) {
+                scorersHtml += `<div class="et-title">Дополнительное время</div>`;
+                extraTimeGoals.forEach(g => {
+                    scorersHtml += renderGoalLine(g, g.team === 'home');
+                });
+            } else if (!isPlayoff && extraTimeGoals.length > 0) {
+                // Для групповых матчей голы на 91+ показываем во втором тайме
+                extraTimeGoals.forEach(g => {
+                    scorersHtml += renderGoalLine(g, g.team === 'home');
+                });
+            }
+
+            if (!isPlayed) {
+                scorersHtml = `<div class="scorers-empty">Матч не сыгран</div>`;
+            }
+
+            // ---- Статистика ----
+            let statsHtml = '';
+            if (isPlayed) {
+                const statsOrder = [
+                    { label: 'Владение мячом', home: match.possessionHome || 50, away: match.possessionAway || 50,
+                        format: '%' },
+                    { label: 'Всего ударов', home: match.shotsTotalHome || 0, away: match.shotsTotalAway || 0,
+                        format: '' },
+                    { label: 'Удары в створ', home: match.shotsOnHome || 0, away: match.shotsOnAway || 0,
+                        format: '' },
+                    { label: 'Ожидаемый счёт', home: match.bigChancesHome || 0, away: match.bigChancesAway || 0,
+                        format: '', tooltip: 'Сколько голов команда наиграла по качеству созданных моментов' },
+                    { label: 'Угловые', home: match.cornersHome || 0, away: match.cornersAway || 0, format: '' },
+                    { label: 'Жёлтые карточки', home: match.yellowHome || 0, away: match.yellowAway || 0,
+                        format: '' },
+                    { label: 'Красные карточки', home: match.redHome || 0, away: match.redAway || 0, format: '' }
+                ];
+
+                statsOrder.forEach(stat => {
+                    const total = stat.home + stat.away;
+                    const homePct = total > 0 ? (stat.home / total * 100) : 50;
+                    const awayPct = total > 0 ? (stat.away / total * 100) : 50;
+                    const homeVal = stat.decimals ? stat.home.toFixed(stat.decimals) : stat.home;
+                    const awayVal = stat.decimals ? stat.away.toFixed(stat.decimals) : stat.away;
+
+                    let tooltipHtml = '';
+                    if (stat.tooltip) {
+                        tooltipHtml = `<span class="info-icon">ⓘ<span class="tooltip">${stat.tooltip}</span></span>`;
+                    }
+
+                    statsHtml += `
+                        <div class="stat-row">
+                            <div class="stat-label">${stat.label} ${tooltipHtml}</div>
+                            <div class="stat-bar-wrap">
+                                <div class="stat-values"><span class="home-val">${homeVal}${stat.format}</span></div>
+                                <div class="stat-bar">
+                                    <div class="bar-home" style="width:${homePct}%;"></div>
+                                    <div class="bar-away" style="width:${awayPct}%;"></div>
+                                </div>
+                                <div class="stat-values"><span class="away-val">${awayVal}${stat.format}</span></div>
+                            </div>
+                        </div>
+                    `;
+                });
+            } else {
+                statsHtml = `<div class="not-played">Матч ещё не сыгран</div>`;
+            }
+
+            // ---- Пенальти для детального окна (только плей-офф) ----
+            let penaltyHtml = '';
+            if (isPlayed && isPlayoff && match.penaltyHome !== null && match.penaltyAway !== null) {
+                penaltyHtml = `<div class="penalty-info">Пенальти: ${match.penaltyHome} : ${match.penaltyAway}</div>`;
+            }
+
+            // ---- Основная разметка ----
+            let html = `
+                <div class="detail-header">
+                    <span class="group-badge">${roundLabel}</span>
+                    <div class="datetime">${dateFormatted} ${match.time || ''}</div>
+                </div>
+                <div class="detail-score">
+                    <div class="score-main">
+                        <div class="team-block home">
+                            <span class="flag">${flagHome}</span>
+                        </div>
+                        <span class="score-big ${isPlayed ? '' : 'empty'}">${isPlayed ? `${match.homeScore} : ${match.awayScore}` : '— : —'}</span>
+                        <div class="team-block away">
+                            <span class="flag">${flagAway}</span>
+                        </div>
+                    </div>
+                    ${penaltyHtml}
+                </div>
+
+                <div class="detail-tabs">
+                    <button class="detail-tab-btn active" data-detail-tab="timeline">Ход матча</button>
+                    <button class="detail-tab-btn" data-detail-tab="stats">Статистика</button>
+                </div>
+
+                <div class="detail-tab-content active" id="detailTabTimeline">
+                    <div class="detail-scorers">
+                        ${scorersHtml}
+                    </div>
+                </div>
+
+                <div class="detail-tab-content" id="detailTabStats">
+                    <div class="detail-stats">
+                        ${statsHtml}
+                    </div>
+                </div>
+            `;
+
+            content.innerHTML = html;
+            overlay.classList.add('active');
+
+            const tabBtns = content.querySelectorAll('.detail-tab-btn');
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    const tabId = this.dataset.detailTab;
+                    content.querySelectorAll('.detail-tab-content').forEach(el => el.classList.remove(
+                    'active'));
+                    const target = content.querySelector(`#detailTab${tabId.charAt(0).toUpperCase() + tabId.slice(1)}`);
+                    if (target) target.classList.add('active');
+                });
+            });
         }
 
         function renderGroups() {
@@ -2694,15 +3003,19 @@
                     let redLeft = '';
                     let redRight = '';
                     if (redHome > 0) {
-                        redLeft =
-                            `<span class="red-card-badge" style="display:inline-block;background:#ff1744;color:white;font-weight:800;font-size:0.6rem;padding:0 5px;border-radius:3px;line-height:16px;min-width:16px;text-align:center;margin-right:3px;">${redHome}</span>`;
+                        redLeft = `<span class="red-card-badge home-red">${redHome}</span>`;
                     }
                     if (redAway > 0) {
-                        redRight =
-                            `<span class="red-card-badge" style="display:inline-block;background:#ff1744;color:white;font-weight:800;font-size:0.6rem;padding:0 5px;border-radius:3px;line-height:16px;min-width:16px;text-align:center;margin-left:3px;">${redAway}</span>`;
+                        redRight = `<span class="red-card-badge away-red">${redAway}</span>`;
                     }
 
                     const groupLabel = m.group && m.group.includes('финала') ? m.group : `Группа ${m.group}`;
+
+                    let penaltyHtml = '';
+                    const isPlayoff = m.group && (m.group.includes('финала') || m.group.includes('1/') || m.group.includes('Матч за'));
+                    if (isPlayed && isPlayoff && m.penaltyHome !== null && m.penaltyAway !== null) {
+                        penaltyHtml = `<div class="penalty-score">(${m.penaltyHome} : ${m.penaltyAway}</div>`;
+                    }
 
                     html += `<div class="schedule-card" data-group="${m.group}" data-home="${m.home}" data-away="${m.away}">
                                 <div style="display:flex;justify-content:space-between;align-items:center;">
@@ -2716,6 +3029,7 @@
                                     </span>
                                     <span class="score-center ${scoreClass}">
                                         ${redLeft}${scoreText}${redRight}
+                                        ${penaltyHtml}
                                     </span>
                                     <span class="team away">
                                         <span class="flag">${flagAway}</span>
@@ -2971,227 +3285,6 @@
         }
 
         // =============================================================
-        // Парсинг минуты для определения тайма
-        // =============================================================
-        function parseMinuteForHalf(minuteStr) {
-            if (!minuteStr) return 0;
-            const str = String(minuteStr).trim();
-            // Если есть +, например "45+2" или "90+3"
-            if (str.includes('+')) {
-                const parts = str.split('+');
-                const base = parseInt(parts[0]) || 0;
-                const extra = parseInt(parts[1]) || 0;
-                return base + extra;
-            }
-            return parseInt(str) || 0;
-        }
-
-        function getHalf(minuteStr) {
-            const minuteNum = parseMinuteForHalf(minuteStr);
-            // 45+1, 45+2 и т.д. - это первый тайм (добавленное время)
-            // 46 и выше - второй тайм
-            if (minuteNum <= 45) return 1;
-            return 2;
-        }
-
-        // =============================================================
-        // ОТКРЫТИЕ ДЕТАЛЬНОГО ОКНА С ВКЛАДКАМИ
-        // =============================================================
-        function openMatchDetail(groupId, match) {
-            const overlay = document.getElementById('matchDetailOverlay');
-            const content = document.getElementById('matchDetailContent');
-            const isPlayed = match.homeScore !== null && match.awayScore !== null;
-            const dateFormatted = match.date ? match.date.replace('2026-', '').replace('-', '.') : '—';
-            const flagHome = FLAGS[match.home] || '🏴';
-            const flagAway = FLAGS[match.away] || '🏴';
-
-            let roundLabel = groupId;
-            if (groupId && groupId.includes('финала')) {
-                roundLabel = groupId;
-            } else if (groupId && MATCHES_DATA[groupId]) {
-                roundLabel = `Группа ${groupId}`;
-            }
-
-            // ---- Формируем ход матча с таймами ----
-            let firstHalfGoals = [];
-            let secondHalfGoals = [];
-
-            if (isPlayed && match.scorers && match.scorers.length > 0) {
-                match.scorers.forEach(s => {
-                    const half = getHalf(s.minute);
-                    if (half === 1) {
-                        firstHalfGoals.push(s);
-                    } else {
-                        secondHalfGoals.push(s);
-                    }
-                });
-                // Сортируем по минутам
-                firstHalfGoals.sort((a, b) => parseMinuteForHalf(a.minute) - parseMinuteForHalf(b.minute));
-                secondHalfGoals.sort((a, b) => parseMinuteForHalf(a.minute) - parseMinuteForHalf(b.minute));
-            }
-
-            let scorersHtml = '';
-
-            // Функция для отображения гола с ассистентом
-            function renderGoalLine(goal, isHome) {
-                const minute = goal.minute;
-                const player = displayPlayerName(goal.player);
-                const assist = goal.assist && goal.assist !== 'null' && goal.assist !== null ? displayPlayerName(goal.assist) : null;
-
-                let assistHtml = '';
-                if (assist) {
-                    if (isHome) {
-                        // home: ассистент после фамилии в скобках
-                        assistHtml = ` <span class="assist">(${assist})</span>`;
-                    } else {
-                        // away: ассистент перед фамилией в скобках
-                        assistHtml = `<span class="assist">(${assist}) </span>`;
-                    }
-                }
-
-                if (isHome) {
-                    // home: минута справа
-                    return `<div class="goal-line home-goal">
-                                <span class="minute">${minute}'</span>
-                                <span class="player-name">${player}${assistHtml}</span>
-                            </div>`;
-                } else {
-                    // away: минута слева
-                    return `<div class="goal-line away-goal">
-                                <span class="player-name">${assistHtml}${player}</span>
-                                <span class="minute">${minute}'</span>
-                            </div>`;
-                }
-            }
-
-            // Первый тайм
-            scorersHtml += `<div class="half-title">1 Тайм</div>`;
-            if (firstHalfGoals.length > 0) {
-                firstHalfGoals.forEach(g => {
-                    scorersHtml += renderGoalLine(g, g.team === 'home');
-                });
-            } else {
-                scorersHtml += `<div class="scorers-empty" style="padding-left:4px;">—</div>`;
-            }
-
-            // Второй тайм
-            scorersHtml += `<div class="half-title">2 Тайм</div>`;
-            if (secondHalfGoals.length > 0) {
-                secondHalfGoals.forEach(g => {
-                    scorersHtml += renderGoalLine(g, g.team === 'home');
-                });
-            } else {
-                scorersHtml += `<div class="scorers-empty" style="padding-left:4px;">—</div>`;
-            }
-
-            if (!isPlayed) {
-                scorersHtml = `<div class="scorers-empty">Матч не сыгран</div>`;
-            }
-
-            // ---- Статистика ----
-            let statsHtml = '';
-            if (isPlayed) {
-                const statsOrder = [
-                    { label: 'Владение мячом', home: match.possessionHome || 50, away: match.possessionAway || 50,
-                        format: '%' },
-                    { label: 'Всего ударов', home: match.shotsTotalHome || 0, away: match.shotsTotalAway || 0,
-                        format: '' },
-                    { label: 'Удары в створ', home: match.shotsOnHome || 0, away: match.shotsOnAway || 0,
-                        format: '' },
-                    { label: 'Ожидаемый счёт', home: match.bigChancesHome || 0, away: match.bigChancesAway || 0,
-                        format: '', tooltip: 'Сколько голов команда наиграла по качеству созданных моментов' },
-                    { label: 'Угловые', home: match.cornersHome || 0, away: match.cornersAway || 0, format: '' },
-                    { label: 'Жёлтые карточки', home: match.yellowHome || 0, away: match.yellowAway || 0,
-                        format: '' },
-                    { label: 'Красные карточки', home: match.redHome || 0, away: match.redAway || 0, format: '' }
-                ];
-
-                statsOrder.forEach(stat => {
-                    const total = stat.home + stat.away;
-                    const homePct = total > 0 ? (stat.home / total * 100) : 50;
-                    const awayPct = total > 0 ? (stat.away / total * 100) : 50;
-                    const homeVal = stat.decimals ? stat.home.toFixed(stat.decimals) : stat.home;
-                    const awayVal = stat.decimals ? stat.away.toFixed(stat.decimals) : stat.away;
-
-                    let tooltipHtml = '';
-                    if (stat.tooltip) {
-                        tooltipHtml = `<span class="info-icon">ⓘ<span class="tooltip">${stat.tooltip}</span></span>`;
-                    }
-
-                    statsHtml += `
-                        <div class="stat-row">
-                            <div class="stat-label">${stat.label} ${tooltipHtml}</div>
-                            <div class="stat-bar-wrap">
-                                <div class="stat-values"><span class="home-val">${homeVal}${stat.format}</span></div>
-                                <div class="stat-bar">
-                                    <div class="bar-home" style="width:${homePct}%;"></div>
-                                    <div class="bar-away" style="width:${awayPct}%;"></div>
-                                </div>
-                                <div class="stat-values"><span class="away-val">${awayVal}${stat.format}</span></div>
-                            </div>
-                        </div>
-                    `;
-                });
-            } else {
-                statsHtml = `<div class="not-played">Матч ещё не сыгран</div>`;
-            }
-
-            // ---- Основная разметка ----
-            let html = `
-                <div class="detail-header">
-                    <span class="group-badge">${roundLabel}</span>
-                    <div class="datetime">${dateFormatted} ${match.time || ''}</div>
-                </div>
-                <div class="detail-score">
-                    <div class="team-block home">
-                        <span class="flag">${flagHome}</span>
-                    </div>
-                    <span class="score-big ${isPlayed ? '' : 'empty'}">${isPlayed ? `${match.homeScore} : ${match.awayScore}` : '— : —'}</span>
-                    <div class="team-block away">
-                        <span class="flag">${flagAway}</span>
-                    </div>
-                </div>
-
-                <!-- Вкладки (текстовые переключатели по центру) -->
-                <div class="detail-tabs">
-                    <button class="detail-tab-btn active" data-detail-tab="timeline">Ход матча</button>
-                    <button class="detail-tab-btn" data-detail-tab="stats">Статистика</button>
-                </div>
-
-                <!-- Ход матча -->
-                <div class="detail-tab-content active" id="detailTabTimeline">
-                    <div class="detail-scorers">
-                        ${scorersHtml}
-                    </div>
-                </div>
-
-                <!-- Статистика -->
-                <div class="detail-tab-content" id="detailTabStats">
-                    <div class="detail-stats">
-                        ${statsHtml}
-                    </div>
-                </div>
-            `;
-
-            content.innerHTML = html;
-            overlay.classList.add('active');
-
-            // Инициализация вкладок внутри модального окна
-            const tabBtns = content.querySelectorAll('.detail-tab-btn');
-            tabBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    tabBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    const tabId = this.dataset.detailTab;
-                    content.querySelectorAll('.detail-tab-content').forEach(el => el.classList.remove(
-                    'active'));
-                    const target = content.querySelector(`#detailTab${tabId.charAt(0).toUpperCase() + tabId.slice(1)}`);
-                    if (target) target.classList.add('active');
-                });
-            });
-        }
-
-        // =============================================================
         // ★★★ ПЛЕЙ-ОФФ ★★★
         // =============================================================
         function renderPlayoff() {
@@ -3252,18 +3345,28 @@
                     const flagHome = FLAGS[m.home] || '🏴';
                     const flagAway = FLAGS[m.away] || '🏴';
 
+                    let penaltyHtml = '';
+                    if (isPlayed && m.penaltyHome !== null && m.penaltyAway !== null) {
+                        penaltyHtml = `<div class="penalty-score">(${m.penaltyHome} : ${m.penaltyAway})</div>`;
+                    }
+
                     html += `
                         <div class="playoff-match-card" data-home="${m.home}" data-away="${m.away}" data-round="${roundName}">
                             <div style="text-align:center;margin-bottom:4px;">
                                 <span class="match-round-badge">${roundName}</span>
                             </div>
                             <div class="match-teams">
-                                <div class="team">
-                                    <span class="flag">${flagHome}</span>
-                                </div>
-                                <span class="score-center ${isPlayed ? '' : 'empty'}">${scoreText}</span>
-                                <div class="team">
-                                    <span class="flag">${flagAway}</span>
+                                <div class="teams-row">
+                                    <div class="team">
+                                        <span class="flag">${flagHome}</span>
+                                    </div>
+                                    <span class="score-center ${isPlayed ? '' : 'empty'}">
+                                        ${scoreText}
+                                        ${penaltyHtml}
+                                    </span>
+                                    <div class="team">
+                                        <span class="flag">${flagAway}</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="match-status ${isPlayed ? 'played' : ''}">${isPlayed ? 'Сыгран' : 'Ожидается'}</div>
