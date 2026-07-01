@@ -632,6 +632,14 @@
             font-size: 0.75rem;
             font-weight: 400;
         }
+        .detail-scorers .goal-line .assist.own-goal {
+            color: #ff1744 !important;
+            font-weight: 600;
+        }
+        .detail-scorers .goal-line .assist.penalty {
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 600;
+        }
         .detail-scorers .scorers-empty {
             color: rgba(255, 255, 255, 0.15);
             font-size: 0.85rem;
@@ -1251,6 +1259,83 @@
             'Панама': '🇵🇦'
         };
 
+        // =============================================================
+        // ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ДЛЯ РАБОТЫ С ГОЛАМИ
+        // =============================================================
+        
+        // Проверка, является ли гол автоголом (по полю assist)
+        function isOwnGoal(scorer) {
+            if (!scorer || !scorer.assist) return false;
+            const assist = scorer.assist.toLowerCase();
+            return assist.includes('автогол') || assist.includes('(аг)');
+        }
+
+        // Проверка, является ли гол пенальти (по полю assist)
+        function isPenalty(scorer) {
+            if (!scorer || !scorer.assist) return false;
+            const assist = scorer.assist.toLowerCase();
+            return assist.includes('пенальти') || assist.includes('(пен)');
+        }
+
+        // Очистка имени игрока от пометок для статистики
+        function cleanPlayerNameForStats(name) {
+            if (!name) return name;
+            return name.replace(/\s*\([^)]*\)\s*$/g, '').trim();
+        }
+
+        // Формирование текста ассиста с учетом автоголов и пенальти
+        function getAssistText(goal, isHome) {
+            if (!goal) return '';
+            
+            // Если это автогол (по полю assist)
+            if (isOwnGoal(goal)) {
+                if (isHome) {
+                    return ` <span class="assist own-goal">(Автогол)</span>`;
+                } else {
+                    return `<span class="assist own-goal">(Автогол) </span>`;
+                }
+            }
+            
+            // Если это пенальти (по полю assist)
+            if (isPenalty(goal)) {
+                if (isHome) {
+                    return ` <span class="assist penalty">(Пенальти)</span>`;
+                } else {
+                    return `<span class="assist penalty">(Пенальти) </span>`;
+                }
+            }
+            
+            // Обычный ассист
+            const assistName = goal.assist && goal.assist !== 'null' && goal.assist !== null ? cleanPlayerNameForStats(goal.assist) : null;
+            if (!assistName) return '';
+            
+            if (isHome) {
+                return ` <span class="assist">(${assistName})</span>`;
+            } else {
+                return `<span class="assist">(${assistName}) </span>`;
+            }
+        }
+
+        // Проверка, нужно ли исключать гол из статистики бомбардиров
+        function isExcludedFromStats(goal) {
+            if (!goal) return true;
+            // Исключаем только автоголы
+            if (isOwnGoal(goal)) return true;
+            return false;
+        }
+
+        // Проверка, нужно ли исключать ассист из статистики
+        function isExcludedFromAssistStats(goal) {
+            if (!goal) return true;
+            // Исключаем автоголы и пенальти
+            if (isOwnGoal(goal) || isPenalty(goal)) return true;
+            if (!goal.assist || goal.assist === 'null' || goal.assist === null) return true;
+            return false;
+        }
+
+        // =============================================================
+        // ДАННЫЕ МАТЧЕЙ
+        // =============================================================
         const MATCHES_DATA = {
             'A': [
                 { home: 'Мексика', away: 'ЮАР', homeScore: 2, awayScore: 0, date: '2026-06-12', time: '00:00',
@@ -1271,7 +1356,7 @@
                     bigChancesHome: 3, bigChancesAway: 1, shotsOnHome: 3, shotsOnAway: 4,
                     possessionHome: 38, possessionAway: 62, cornersHome: 5, cornersAway: 5,
                     scorers: [{ player: 'Садилек', minute: 6, team: 'home', assist: 'Сойка' },
-                    { player: '(Пен) Мокоена', minute: 83, team: 'away', assist: null }] },
+                    { player: 'Мокоена', minute: 83, team: 'away', assist: 'Пенальти' }] },
                 { home: 'Мексика', away: 'Южная Корея', homeScore: 1, awayScore: 0, date: '2026-06-19',
                     time: '06:00', yellowHome: 0, yellowAway: 2, redHome: 0, redAway: 0, shotsTotalHome: 8,
                     shotsTotalAway: 9, bigChancesHome: 2, bigChancesAway: 3, shotsOnHome: 4,
@@ -1307,8 +1392,8 @@
                     yellowHome: 2, yellowAway: 1, redHome: 0, redAway: 0, shotsTotalHome: 6, shotsTotalAway: 26,
                     bigChancesHome: 1, bigChancesAway: 6, shotsOnHome: 3, shotsOnAway: 7,
                     possessionHome: 32, possessionAway: 68, cornersHome: 3, cornersAway: 10,
-                    scorers: [{ player: 'Мухейм (АГ)', minute: 90, team: 'home', assist: null }, { player: 'Эмболо (Пен)', minute: 17,
-                        team: 'away', assist: null }] },
+                    scorers: [{ player: 'Мухейм', minute: 90, team: 'home', assist: 'Автогол' }, { player: 'Эмболо', minute: 17,
+                        team: 'away', assist: 'Пенальти' }] },
                 { home: 'Швейцария', away: 'Босния и Герцеговина', homeScore: 4, awayScore: 1,
                     date: '2026-06-19', time: '00:00', yellowHome: 1, yellowAway: 2, redHome: 0, redAway: 1,
                     shotsTotalHome: 13, shotsTotalAway: 5, bigChancesHome: 4, bigChancesAway: 0, shotsOnHome: 7,
@@ -1320,8 +1405,8 @@
                             team: 'home', assist: 'Эмболо' },
                         { player: 'Манзамби', minute: 90,
                             team: 'home', assist: 'Варгас' },
-                        { player: 'Джака(Пен)', minute: '90+7',
-                            team: 'home', assist: null },
+                        { player: 'Джака', minute: '90+7',
+                            team: 'home', assist: 'Пенальти' },
                         { player: 'Махмич', minute: '90+3',
                             team: 'away', assist: null }
                     ] },
@@ -1337,8 +1422,8 @@
                         team: 'home', assist: null },
                     { player: 'Салиба', minute: 64,
                         team: 'home', assist: null },
-                    { player: 'Ал Маней (АГ)', minute: 76,
-                        team: 'home', assist: null },
+                    { player: 'Ал Маней', minute: 76,
+                        team: 'home', assist: 'Автогол' },
                     { player: 'Дэвид', minute: '90+2',
                         team: 'home', assist: 'Салиба' }
                     ] },
@@ -1359,8 +1444,8 @@
                     shotsOnAway: 3, possessionHome: 54, possessionAway: 46, cornersHome: 5,
                     cornersAway: 5, scorers: [{ player: 'Аладжбегович', minute: '29',
                         team: 'home', assist: 'Башич' },
-                    { player: 'Абунада (АГ)', minute: '34',
-                        team: 'home', assist: null },
+                    { player: 'Абунада', minute: '34',
+                        team: 'home', assist: 'Автогол' },
                     { player: 'Аль-Хайдос', minute: '42',
                         team: 'away', assist: 'Эдмилсон' },
                     { player: 'Махмич', minute: '80',
@@ -1415,8 +1500,8 @@
                     time: '03:00', yellowHome: 0, yellowAway: 3, redHome: 0, redAway: 0, shotsTotalHome: 22,
                     shotsTotalAway: 9, bigChancesHome: 5, bigChancesAway: 1, shotsOnHome: 11,
                     shotsOnAway: 2, possessionHome: 69, possessionAway: 31, cornersHome: 9,
-                    cornersAway: 1, scorers: [{ player: 'Боно (АГ)', minute: '10',
-                        team: 'away', assist: null },
+                    cornersAway: 1, scorers: [{ player: 'Боно', minute: '10',
+                        team: 'away', assist: 'Автогол' },
                     { player: 'Хакими', minute: '39',
                         team: 'home', assist: null },
                     { player: 'Исидор', minute: '43',
@@ -1434,8 +1519,8 @@
                     yellowHome: 1, yellowAway: 5, redHome: 0, redAway: 0, shotsTotalHome: 16, shotsTotalAway: 9,
                     bigChancesHome: 4, bigChancesAway: 1, shotsOnHome: 6, shotsOnAway: 1,
                     possessionHome: 65, possessionAway: 35, cornersHome: 3, cornersAway: 1,
-                    scorers: [{ player: 'Бобадилла (АГ)', minute: '7',
-                        team: 'home', assist: null },
+                    scorers: [{ player: 'Бобадилла', minute: '7',
+                        team: 'home', assist: 'Автогол' },
                     { player: 'Балоган', minute: '31',
                         team: 'home', assist: 'Пулишич' },
                     { player: 'Балоган', minute: '45+5',
@@ -1464,8 +1549,8 @@
                     time: '00:00', yellowHome: 3, yellowAway: 4, redHome: 0, redAway: 0, shotsTotalHome: 10,
                     shotsTotalAway: 5, bigChancesHome: 2, bigChancesAway: 0, shotsOnHome: 2,
                     shotsOnAway: 2, possessionHome: 62, possessionAway: 38, cornersHome: 7,
-                    cornersAway: 4, scorers: [{ player: 'Бургес (АГ)', minute: '11',
-                        team: 'home', assist: null },
+                    cornersAway: 4, scorers: [{ player: 'Бургес', minute: '11',
+                        team: 'home', assist: 'Автогол' },
                     { player: 'Фримэн', minute: '43',
                         team: 'home', assist: null }
                     ] },
@@ -1499,8 +1584,8 @@
                         team: 'home', assist: 'Вирц' },
                     { player: 'Шлоттербек', minute: '38',
                         team: 'home', assist: 'Браун' },
-                    { player: 'Хаверц (Пен)', minute: '45+5',
-                        team: 'home', assist: null },
+                    { player: 'Хаверц', minute: '45+5',
+                        team: 'home', assist: 'Пенальти' },
                     { player: 'Мусиала', minute: '47',
                         team: 'home', assist: 'Киммих' },
                     { player: 'Браун', minute: '68',
@@ -1625,7 +1710,7 @@
                         { player: 'Бробби', minute: '7', team: 'away', assist: 'Ван Дейк' },
                         { player: 'Ван Хекке', minute: '62', team: 'away', assist: 'Рейндерс' },
                         { player: 'Мастоури', minute: '54', team: 'away', assist: 'Меджбри' },
-                        { player: 'Шхири (АГ)', minute: '3', team: 'home', assist: null }
+                        { player: 'Шхири', minute: '3', team: 'home', assist: 'Автогол' }
                     ] },
                 { home: 'Япония', away: 'Швеция', homeScore: 1, awayScore: 1, date: '2026-06-26',
                     time: '04:00', yellowHome: 1, yellowAway: 2, redHome: 0, redAway: 0, shotsTotalHome: 8,
@@ -1644,8 +1729,8 @@
                     shotsOnAway: 3, possessionHome: 54, possessionAway: 46, cornersHome: 2,
                     cornersAway: 8, scorers: [{ player: 'Ашур', minute: '20',
                         team: 'away', assist: 'Салах' },
-                    { player: 'Хени (АГ)', minute: '66',
-                        team: 'home', assist: null }
+                    { player: 'Хени', minute: '66',
+                        team: 'home', assist: 'Автогол' }
                     ] },
                 { home: 'Иран', away: 'Новая Зеландия', homeScore: 2, awayScore: 2, date: '2026-06-16',
                     time: '06:00', yellowHome: 1, yellowAway: 0, redHome: 0, redAway: 0, shotsTotalHome: 17,
@@ -1743,8 +1828,8 @@
                         team: 'home', assist: 'Лапорт' },
                     { player: 'Оярсабаль', minute: '24',
                         team: 'home', assist: 'Ольмо' },
-                    { player: 'Аль-Тамбакти (АГ)', minute: '49',
-                        team: 'home', assist: null }
+                    { player: 'Аль-Тамбакти', minute: '49',
+                        team: 'home', assist: 'Автогол' }
                     ] },
                 { home: 'Уругвай', away: 'Испания', homeScore: 0, awayScore: 1, date: '2026-06-27',
                     time: '05:00', yellowHome: 3, yellowAway: 1, redHome: 1, redAway: 0, shotsTotalHome: 5,
@@ -1782,8 +1867,8 @@
                         team: 'away', assist: 'Уолф' },
                     { player: 'Остигард', minute: '76',
                         team: 'away', assist: 'Эдегор' },
-                    { player: 'Хуссейн (АГ)', minute: '90+6',
-                        team: 'away', assist: null },
+                    { player: 'Хуссейн', minute: '90+6',
+                        team: 'away', assist: 'Автогол' },
                     { player: 'Хуссейн', minute: '39',
                         team: 'home', assist: 'Аль-Аммари' }
                     ] },
@@ -1862,10 +1947,10 @@
                     shotsOnAway: 4, possessionHome: 63, possessionAway: 37, cornersHome: 4,
                     cornersAway: 3, scorers: [{ player: 'Шмид', minute: '21',
                         team: 'home', assist: 'Шлагер' },
-                    { player: 'Ал Араб (АГ)', minute: '76',
-                        team: 'home', assist: null },
-                    { player: 'Арнаутович (Пен)', minute: '90+12',
-                        team: 'home', assist: null },
+                    { player: 'Ал Араб', minute: '76',
+                        team: 'home', assist: 'Автогол' },
+                    { player: 'Арнаутович', minute: '90+12',
+                        team: 'home', assist: 'Пенальти' },
                     { player: 'Олмен', minute: '50',
                         team: 'away', assist: 'Аль Равабех' }
                     ] },
@@ -1897,8 +1982,8 @@
                             team: 'home', assist: 'Хадэд' },
                         { player: 'Ло Селсо', minute: '19',
                             team: 'away', assist: null },
-                        { player: 'Мартинес (Пен)', minute: '31',
-                            team: 'away', assist: null },
+                        { player: 'Мартинес', minute: '31',
+                            team: 'away', assist: 'Пенальти' },
                         { player: 'Месси', minute: '80',
                             team: 'away', assist: null }
                     ] },
@@ -1959,8 +2044,8 @@
                         team: 'home', assist: null },
                     { player: 'Роналду', minute: '39',
                         team: 'home', assist: 'Фернандеш' },
-                    { player: 'Ниматов (АГ)', minute: '60',
-                        team: 'home', assist: null },
+                    { player: 'Ниматов', minute: '60',
+                        team: 'home', assist: 'Автогол' },
                     { player: 'Леау', minute: '87',
                         team: 'home', assist: null }
                     ] },
@@ -1975,8 +2060,8 @@
                     shotsOnAway: 1, possessionHome: 58, possessionAway: 42, cornersHome: 2,
                     cornersAway: 4, scorers: [{ player: 'Шомуродов', minute: '10',
                             team: 'away', assist: 'Мозговой' },
-                        { player: 'Висса (Пен)', minute: '68',
-                            team: 'home', assist: null },
+                        { player: 'Висса', minute: '68',
+                            team: 'home', assist: 'Пенальти' },
                         { player: 'Майеле', minute: '78',
                             team: 'home', assist: null },
                         { player: 'Висса', minute: '90+1',
@@ -1988,8 +2073,8 @@
                     time: '01:00', yellowHome: 0, yellowAway: 0, redHome: 0, redAway: 0, shotsTotalHome: 22,
                     shotsTotalAway: 10, bigChancesHome: 7, bigChancesAway: 2, shotsOnHome: 11,
                     shotsOnAway: 5, possessionHome: 52, possessionAway: 48, cornersHome: 8,
-                    cornersAway: 2, scorers: [{ player: 'Кейн (Пен)', minute: '12',
-                        team: 'home', assist: null },
+                    cornersAway: 2, scorers: [{ player: 'Кейн', minute: '12',
+                        team: 'home', assist: 'Пенальти' },
                     { player: 'Кейн', minute: '42',
                         team: 'home', assist: 'Райс' },
                     { player: 'Беллингем', minute: '47',
@@ -2421,18 +2506,18 @@ team: 'away', assist: 'Тальби' }], penaltyHome: 2, penaltyAway: 3 },
                 MATCHES_DATA[gid].forEach(m => {
                     if (m.scorers) {
                         m.scorers.forEach(s => {
-                            if (s.player.toLowerCase().includes('аг') || s.player.includes(
-                                    '(АГ)')) {
+                            // Исключаем автоголы из статистики бомбардиров
+                            if (isExcludedFromStats(s)) {
                                 return;
                             }
                             allScorers.push({
                                 player: cleanPlayerNameForStats(s.player),
                                 team: s.team === 'home' ? m.home : m.away,
                                 goals: 1,
-                                isPenalty: s.player.toLowerCase().includes('пен') || s.player
-                                    .toLowerCase().includes('pen')
+                                isPenalty: isPenalty(s)
                             });
-                            if (s.assist && s.assist !== 'null' && s.assist !== null) {
+                            // Исключаем автоголы и пенальти из статистики ассистов
+                            if (!isExcludedFromAssistStats(s)) {
                                 const assistName = cleanPlayerNameForStats(s.assist);
                                 allAssists.push({
                                     player: assistName,
@@ -2523,17 +2608,16 @@ team: 'away', assist: 'Тальби' }], penaltyHome: 2, penaltyAway: 3 },
 
                     if (m.scorers) {
                         m.scorers.forEach(s => {
-                            if (s.player.toLowerCase().includes('аг') || s.player.includes('(АГ)')) {
+                            if (isExcludedFromStats(s)) {
                                 return;
                             }
                             allScorers.push({
                                 player: cleanPlayerNameForStats(s.player),
                                 team: s.team === 'home' ? m.home : m.away,
                                 goals: 1,
-                                isPenalty: s.player.toLowerCase().includes('пен') || s.player
-                                    .toLowerCase().includes('pen')
+                                isPenalty: isPenalty(s)
                             });
-                            if (s.assist && s.assist !== 'null' && s.assist !== null) {
+                            if (!isExcludedFromAssistStats(s)) {
                                 const assistName = cleanPlayerNameForStats(s.assist);
                                 allAssists.push({
                                     player: assistName,
@@ -2605,11 +2689,6 @@ team: 'away', assist: 'Тальби' }], penaltyHome: 2, penaltyAway: 3 },
             };
         }
 
-        function cleanPlayerNameForStats(name) {
-            if (!name) return name;
-            return name.replace(/\s*\([^)]*\)\s*$/g, '').trim();
-        }
-
         function displayPlayerName(name) {
             return name;
         }
@@ -2652,31 +2731,24 @@ team: 'away', assist: 'Тальби' }], penaltyHome: 2, penaltyAway: 3 },
                 const parts = str.split('+');
                 const base = parseInt(parts[0]) || 0;
                 const extra = parseInt(parts[1]) || 0;
-                return base + extra / 100; // дробная часть для сортировки
+                return base + extra / 100;
             }
             return parseInt(str) || 0;
         }
 
-        // Определение тайма:
-        // 1 = первый тайм (1-45)
-        // 2 = второй тайм (46-90, включая 90+1, 90+2 и т.д.)
-        // 3 = дополнительное время (91 и выше)
         function getHalf(minuteStr) {
             if (!minuteStr) return 2;
             const str = String(minuteStr).trim();
             const baseMinute = parseInt(str) || 0;
             
-            // Если это 90+x (90+1, 90+2 и т.д.) - это второй тайм
             if (str.includes('+') && baseMinute === 90) {
                 return 2;
             }
             
-            // Если минута >= 91 - дополнительное время
             if (baseMinute >= 91) {
                 return 3;
             }
             
-            // 1-45 - первый тайм, 46-90 - второй
             if (baseMinute <= 45) return 1;
             return 2;
         }
@@ -2699,13 +2771,11 @@ team: 'away', assist: 'Тальби' }], penaltyHome: 2, penaltyAway: 3 },
                 roundLabel = `Группа ${groupId}`;
             }
 
-            // ---- Формируем ход матча с таймами ----
             let firstHalfGoals = [];
             let secondHalfGoals = [];
             let extraTimeGoals = [];
 
             if (isPlayed && match.scorers && match.scorers.length > 0) {
-                // Сначала сортируем все голы по времени
                 const sortedScorers = [...match.scorers].sort((a, b) => {
                     return parseMinuteValue(a.minute) - parseMinuteValue(b.minute);
                 });
@@ -2727,31 +2797,22 @@ team: 'away', assist: 'Тальби' }], penaltyHome: 2, penaltyAway: 3 },
             function renderGoalLine(goal, isHome) {
                 const minute = goal.minute;
                 const player = displayPlayerName(goal.player);
-                const assist = goal.assist && goal.assist !== 'null' && goal.assist !== null ? displayPlayerName(goal.assist) : null;
-
-                let assistHtml = '';
-                if (assist) {
-                    if (isHome) {
-                        assistHtml = ` <span class="assist">(${assist})</span>`;
-                    } else {
-                        assistHtml = `<span class="assist">(${assist}) </span>`;
-                    }
-                }
+                const assistText = getAssistText(goal, isHome);
 
                 if (isHome) {
                     return `<div class="goal-line home-goal">
                                 <span class="minute">${minute}'</span>
-                                <span class="player-name">${player}${assistHtml}</span>
+                                <span class="player-name">${player}</span>
+                                ${assistText}
                             </div>`;
                 } else {
                     return `<div class="goal-line away-goal">
-                                <span class="player-name">${assistHtml}${player}</span>
+                                <span class="player-name">${assistText}${player}</span>
                                 <span class="minute">${minute}'</span>
                             </div>`;
                 }
             }
 
-            // Проверяем, является ли матч плей-офф
             const isPlayoff = groupId && (groupId.includes('финала') || groupId.includes('1/') || groupId.includes('Матч за'));
 
             scorersHtml += `<div class="half-title">1 Тайм</div>`;
@@ -2772,14 +2833,12 @@ team: 'away', assist: 'Тальби' }], penaltyHome: 2, penaltyAway: 3 },
                 scorersHtml += `<div class="scorers-empty" style="padding-left:4px;">—</div>`;
             }
 
-            // Дополнительное время - только для плей-офф
             if (isPlayoff && extraTimeGoals.length > 0) {
                 scorersHtml += `<div class="et-title">Дополнительное время</div>`;
                 extraTimeGoals.forEach(g => {
                     scorersHtml += renderGoalLine(g, g.team === 'home');
                 });
             } else if (!isPlayoff && extraTimeGoals.length > 0) {
-                // Для групповых матчей голы на 91+ показываем во втором тайме
                 extraTimeGoals.forEach(g => {
                     scorersHtml += renderGoalLine(g, g.team === 'home');
                 });
@@ -2789,7 +2848,6 @@ team: 'away', assist: 'Тальби' }], penaltyHome: 2, penaltyAway: 3 },
                 scorersHtml = `<div class="scorers-empty">Матч не сыгран</div>`;
             }
 
-            // ---- Статистика ----
             let statsHtml = '';
             if (isPlayed) {
                 const statsOrder = [
@@ -2837,13 +2895,11 @@ team: 'away', assist: 'Тальби' }], penaltyHome: 2, penaltyAway: 3 },
                 statsHtml = `<div class="not-played">Матч ещё не сыгран</div>`;
             }
 
-            // ---- Пенальти для детального окна (только плей-офф) ----
             let penaltyHtml = '';
             if (isPlayed && isPlayoff && match.penaltyHome !== null && match.penaltyAway !== null) {
                 penaltyHtml = `<div class="penalty-info">Пенальти: ${match.penaltyHome} : ${match.penaltyAway}</div>`;
             }
 
-            // ---- Основная разметка ----
             let html = `
                 <div class="detail-header">
                     <span class="group-badge">${roundLabel}</span>
@@ -3027,7 +3083,7 @@ team: 'away', assist: 'Тальби' }], penaltyHome: 2, penaltyAway: 3 },
                     let penaltyHtml = '';
                     const isPlayoff = m.group && (m.group.includes('финала') || m.group.includes('1/') || m.group.includes('Матч за'));
                     if (isPlayed && isPlayoff && m.penaltyHome !== null && m.penaltyAway !== null) {
-                        penaltyHtml = `<div class="penalty-score">(${m.penaltyHome} : ${m.penaltyAway}</div>`;
+                        penaltyHtml = `<div class="penalty-score">(${m.penaltyHome} : ${m.penaltyAway})</div>`;
                     }
 
                     html += `<div class="schedule-card" data-group="${m.group}" data-home="${m.home}" data-away="${m.away}">
@@ -3297,9 +3353,6 @@ team: 'away', assist: 'Тальби' }], penaltyHome: 2, penaltyAway: 3 },
             container.innerHTML = html;
         }
 
-        // =============================================================
-        // ★★★ ПЛЕЙ-ОФФ ★★★
-        // =============================================================
         function renderPlayoff() {
             const container = document.getElementById('playoffContainer');
 
@@ -3413,9 +3466,6 @@ team: 'away', assist: 'Тальби' }], penaltyHome: 2, penaltyAway: 3 },
             });
         }
 
-        // =============================================================
-        // ИНИЦИАЛИЗАЦИЯ
-        // =============================================================
         function initTabs() {
             const tabs = document.querySelectorAll('.tab-btn');
             tabs.forEach(btn => {
